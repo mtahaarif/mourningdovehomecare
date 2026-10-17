@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Box, Canvas, S } from "@/components/Box";
-import { Pic } from "@/components/Pic";
-import { ContactForm } from "@/components/ContactForm";
-import { PHONE, PHONE_HREF } from "@/lib/site";
+import Image from "next/image";
+import type { CSSProperties } from "react";
+import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
+import { PageTransition } from "@/components/site/PageTransition";
+import { ContactForm } from "@/components/forms/ContactForm";
+import { GlowCard } from "@/components/ui/GlowCard";
+import { CopyEmail } from "@/components/ui/CopyEmail";
+import { OpenStatus } from "@/components/ui/OpenStatus";
+import { img } from "@/lib/images";
+import { ADDRESS, EMAIL, HOURS, MAP_URL, PHONE, PHONE_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -11,68 +17,153 @@ export const metadata: Metadata = {
   twitter: { title: "Contact Us | Home Care Agency" },
 };
 
+const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
+
 export default function ContactPage() {
   return (
-    <Canvas d={1769} m={1802}>
-      <div className="col-bg" />
+    <PageTransition>
+      {/* ───────────── Hero: photo + glass form ───────────── */}
+      <section className="relative isolate overflow-hidden pt-36 pb-20 sm:pt-44 lg:pb-28">
+        <Image
+          src={img.contactNurse}
+          alt="Nurse greeting elderly man"
+          fill
+          preload
+          placeholder="blur"
+          sizes="100vw"
+          className="-z-20 object-cover object-[35%_50%]"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-plum-950/90 via-plum-950/70 to-plum-950/30" />
 
-      <Box d={[0, 0, 0, 294]} m={[0, 0, 0, 233]} band className="bg-white" />
-      <Box d={[396, 37, 187, 60]} fs={[38, 53.2]} m={[20, 20, 280, 43]} mfs={[27, 37.8]} className="f-caslon c-maroon">
-        <h1>Contact Us</h1>
-      </Box>
-      <Box d={[48, 128, 883, 125]} fs={[28, 39.2]} m={[20, 73, 280, 140]} mfs={[20, 28]} className="italic center">
-        <h2>
-          If you are seeking excellent home care services or would like more information, our advisors are available to assist you with any
-          questions you may have.
-        </h2>
-      </Box>
+        <div className="shell grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+          <div className="text-white">
+            <span className="eyebrow enter text-dove-300" style={d(0)}>
+              Get in touch
+            </span>
+            <h1 className="enter mt-6 text-6xl leading-[0.95] font-medium sm:text-7xl lg:text-[5.75rem]" style={d(90)}>
+              Contact <span className="text-gradient italic">Us</span>
+            </h1>
+            <p className="enter mt-8 max-w-lg font-display text-xl leading-relaxed text-white/80 italic sm:text-2xl" style={d(180)}>
+              If you are seeking excellent home care services or would like more information, our advisors are available to assist you with any
+              questions you may have.
+            </p>
+            <p className="enter mt-8 text-white/70" style={d(260)}>
+              For all inquiries, call{" "}
+              <a href={PHONE_HREF} className="link-draw font-semibold text-white">
+                {PHONE}
+              </a>
+              <br />
+              Or submit your details via our contact form.
+            </p>
+          </div>
 
-      <Pic src="/images/contact-nurse-greeting.jpg" alt="Nurse greeting elderly man" d={[0, 294, 0, 967]} m={[0, 233, 0, 727]} band sizes={["100vw", "100vw"]} />
+          <div className="enter glass rounded-[2.5rem] !bg-white/85 p-6 shadow-lift sm:p-10" style={d(200)}>
+            <h2 className="mb-6 text-2xl font-medium text-plum-950 sm:text-3xl">Send us a message</h2>
+            <ContactForm />
+          </div>
+        </div>
+      </section>
 
-      <Box d={[82, 348, 839, 202]} fs={[48, 67.2]} m={[20, 253, 280, 182]} mfs={[26, 36.4]} className="c-blue center">
-        <h2>
-          <br />
-          For all inquiries, call <span className="d-only">{PHONE}</span>
-          <a href={PHONE_HREF} className="m-only">
-            {PHONE}
-          </a>
-          <br />
-          Or submit your details via our contact form
-        </h2>
-      </Box>
+      {/* ───────────── Ways to reach us ───────────── */}
+      <section className="py-28 sm:py-32" aria-labelledby="reach-title">
+        <div className="shell">
+          <h2 id="reach-title" className="max-w-xl text-4xl leading-[1.05] font-medium sm:text-5xl" data-reveal="up">
+            Four ways to <span className="italic text-wine-700">reach us</span>
+          </h2>
 
-      <ContactForm d={[209, 616, 584, 400]} m={[20, 455, 280, 485]} />
+          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            <GlowCard as="a" href={PHONE_HREF} className="group flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen" data-reveal="up">
+              <span className="grid size-14 place-items-center rounded-2xl bg-dove-100 text-dove-700 transition-transform duration-500 group-hover:-rotate-12">
+                <Phone className="size-6" />
+              </span>
+              <h3 className="mt-8 font-sans text-sm font-bold tracking-[0.18em] text-plum-400 uppercase">Call us</h3>
+              <p className="mt-2 font-display text-[1.65rem] leading-tight text-plum-950">{PHONE}</p>
+              <span className="mt-auto flex items-center gap-1 pt-6 text-sm font-semibold text-dove-700">
+                Tap to call <ArrowUpRight className="size-4 transition-transform duration-500 group-hover:rotate-45" />
+              </span>
+            </GlowCard>
 
-      <Box d={[0, 1261, 0, 256]} m={[0, 960, 0, 549]} band className="bg-plum" />
-      <Box d={[50, 1380, 157, 60]} fs={[38, 53.2]} m={[20, 980, 280, 41]} mfs={[29, 40.6]} className="c-white bold">
-        <h2>Partners</h2>
-      </Box>
-      <Box d={[241, 1360, 1, 100]} className="partners-rule" />
-      <Pic src="/images/partner-pa-health-wellness.jpg" alt="PA_Health_Wellness_Logo.jpg" d={[298, 1343, 406, 129]} m={[115, 1079, 90, 90]} />
-      <Pic src="/images/partner-upmc-health-plan.jpg" d={[763, 1343, 146, 134]} m={[110, 1179, 100, 92]} />
+            <GlowCard glow="22 178 94" className="flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen" data-reveal="up" style={d(90)}>
+              <span className="grid size-14 place-items-center rounded-2xl bg-leaf-100 text-leaf-700">
+                <Mail className="size-6" />
+              </span>
+              <h3 className="mt-8 font-sans text-sm font-bold tracking-[0.18em] text-plum-400 uppercase">Email</h3>
+              <a href={`mailto:${EMAIL}`} className="link-draw mt-2 self-start font-display text-lg leading-snug text-plum-950">
+                {EMAIL.split("@")[0]}@
+                <wbr />
+                {EMAIL.split("@")[1]}
+              </a>
+              <div className="mt-auto pt-6">
+                <CopyEmail />
+              </div>
+            </GlowCard>
 
-      <Box d={[0, 1517, 980, 251]} className="bg-plum" />
-      <Box m={[0, 1529, 0, 253]} band className="bg-plum" />
-      <Box d={[32, 1539, 392, 160]} fs={[38, 53.2]} m={[29, 1539, 262, 100]} mfs={[23, 32.2]} className="c-white">
-        <h3>
-          Hours of Operation:
-          <br />
-          M-Th 9:00am-5:00pm
-          <br />
-          Fri- 9:00am-12:30pm
-        </h3>
-      </Box>
-      <Box d={[502, 1539, 463, 162]} fs={[38, 53.2]} m={[10, 1648, 300, 124]} mfs={[29, 40.6]} className="c-white bold">
-        <h3>
-          <S d={38} m={29}>
-            Address:&nbsp;
-          </S>
-          <br />
-          <S d={34} m={27}>
-            589 Skippack Pike, Suite 305, Blue Bell PA 19422
-          </S>
-        </h3>
-      </Box>
-    </Canvas>
+            <GlowCard glow="222 99 113" className="flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen" data-reveal="up" style={d(180)}>
+              <span className="grid size-14 place-items-center rounded-2xl bg-wine-100 text-wine-600">
+                <Clock className="size-6" />
+              </span>
+              <h3 className="mt-8 font-sans text-sm font-bold tracking-[0.18em] text-plum-400 uppercase">Hours of operation</h3>
+              <dl className="mt-3 space-y-1.5 text-plum-800">
+                {HOURS.map((h) => (
+                  <div key={h.label} className="flex justify-between gap-3">
+                    <dt>{h.label}</dt>
+                    <dd className="font-semibold text-plum-950">{h.display}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-auto pt-6">
+                <OpenStatus />
+              </div>
+            </GlowCard>
+
+            <GlowCard
+              as="a"
+              href={MAP_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              glow="147 120 181"
+              className="group flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen"
+              data-reveal="up"
+              style={d(270)}
+            >
+              <span className="grid size-14 place-items-center rounded-2xl bg-plum-100 text-plum-700 transition-transform duration-500 group-hover:-translate-y-1">
+                <MapPin className="size-6" />
+              </span>
+              <h3 className="mt-8 font-sans text-sm font-bold tracking-[0.18em] text-plum-400 uppercase">Address</h3>
+              <p className="mt-2 font-display text-xl leading-snug text-plum-950">
+                {ADDRESS.street},
+                <br />
+                {ADDRESS.city}
+              </p>
+              <span className="mt-auto flex items-center gap-1 pt-6 text-sm font-semibold text-plum-700">
+                Get directions <ArrowUpRight className="size-4 transition-transform duration-500 group-hover:rotate-45" />
+              </span>
+            </GlowCard>
+          </div>
+        </div>
+      </section>
+
+      {/* ───────────── Partners ───────────── */}
+      <section className="pb-28 sm:pb-36" aria-labelledby="partners-title">
+        <div className="shell">
+          <div className="grid items-center gap-10 rounded-[2.5rem] bg-white p-8 ring-1 ring-linen sm:p-14 lg:grid-cols-[0.8fr_1.2fr]">
+            <div data-reveal="up">
+              <span className="eyebrow text-dove-700">Partners</span>
+              <h2 id="partners-title" className="mt-5 text-4xl leading-[1.05] font-medium sm:text-5xl">
+                Working together for <span className="italic text-leaf-700">better care</span>
+              </h2>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <GlowCard tilt={10} className="grid h-48 place-items-center rounded-[2rem] bg-cream p-8 ring-1 ring-linen" data-reveal="up" style={d(100)}>
+                <Image src={img.partnerPa} alt="PA Health & Wellness" sizes="300px" className="h-auto max-h-24 w-auto" />
+              </GlowCard>
+              <GlowCard glow="147 120 181" tilt={10} className="grid h-48 place-items-center rounded-[2rem] bg-cream p-8 ring-1 ring-linen" data-reveal="up" style={d(190)}>
+                <Image src={img.partnerUpmc} alt="UPMC Health Plan" sizes="160px" className="h-auto max-h-28 w-auto rounded-xl" />
+              </GlowCard>
+            </div>
+          </div>
+        </div>
+      </section>
+    </PageTransition>
   );
 }
