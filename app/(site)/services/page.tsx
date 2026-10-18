@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import type { CSSProperties } from "react";
 import { Accessibility, ArrowDown, Brain, ChevronDown, Info, Phone, Stethoscope } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
@@ -52,7 +52,7 @@ export default function ServicesPage() {
       <section className="noise relative isolate flex min-h-[44rem] items-end overflow-hidden bg-plum-950 pt-40 pb-16 text-white sm:min-h-[48rem] sm:pb-20">
         <div className="kb absolute inset-0 -z-10" aria-hidden="true">
           {[img.services1, img.services2, img.services3].map((src, i) => (
-            <Image
+            <Img
               key={i}
               src={src}
               alt=""
@@ -184,7 +184,7 @@ export default function ServicesPage() {
         <div className="shell grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
           <div className="relative">
             <div className="overflow-hidden rounded-[2.5rem] shadow-lift">
-              <Image
+              <Img
                 src={img.gardening}
                 alt="Woman Gardening Smiling"
                 sizes="(max-width: 1024px) 100vw, 600px"
@@ -196,7 +196,7 @@ export default function ServicesPage() {
               data-reveal="up"
               style={d(200)}
             >
-              <Image src={img.partnerUpmc} alt="UPMC Health Plan" sizes="64px" className="h-14 w-auto rounded-xl" />
+              <Img src={img.partnerUpmc} alt="UPMC Health Plan" width={61} height={56} className="h-14 w-auto rounded-xl" />
               <span className="text-sm leading-tight">
                 <span className="block text-plum-500">Partnered with</span>
                 <span className="block font-semibold text-plum-900">UPMC Health Plan</span>

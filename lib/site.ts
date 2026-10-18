@@ -41,12 +41,16 @@ export const HOURS = [
   { label: "Friday", days: [5], open: "09:00", close: "12:30", display: "9:00am – 12:30pm" },
 ] as const;
 
-/** Navigation order also drives the direction of page transitions. */
+/**
+ * Navigation order also drives the direction of page transitions.
+ * `sr` adds visually hidden words before/after the visible label, so each link's
+ * accessible name (and anchor text) is descriptive while still containing the label.
+ */
 export const NAV = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Testimonials", href: "/general-4" },
-  { label: "Join Our Team", href: "/employment" },
-  { label: "Contact Us", href: "/contact-us" },
+  { label: "Home", href: "/", sr: ["", " page"] },
+  { label: "About", href: "/about", sr: ["", " Mourning Dove"] },
+  { label: "Services", href: "/services", sr: ["Home care ", ""] },
+  { label: "Testimonials", href: "/general-4", sr: ["Client ", ""] },
+  { label: "Join Our Team", href: "/employment", sr: ["", ""] },
+  { label: "Contact Us", href: "/contact-us", sr: ["", ""] },
 ] as const;

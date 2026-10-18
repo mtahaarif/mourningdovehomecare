@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import type { CSSProperties } from "react";
 import { ArrowRight, ArrowUpRight, CircleCheck, HeartHandshake, House, MapPin, Phone, Quote, Sparkles, Star } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
@@ -85,7 +85,7 @@ export default function HomePage() {
             </svg>
 
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2.75rem] shadow-lift ring-1 ring-black/5">
-              <Image
+              <Img
                 src={img.homeCaregiver}
                 alt="A caregiver with a smiling senior woman outdoors"
                 preload
@@ -106,7 +106,7 @@ export default function HomePage() {
               className="absolute -bottom-10 -left-6 w-44 rotate-[-5deg] overflow-hidden rounded-3xl border-[6px] border-white shadow-lift sm:-left-14 sm:w-56"
               style={{ animation: "float 10s ease-in-out -3s infinite" }}
             >
-              <Image src={img.homeHero} alt="A smiling senior couple" sizes="240px" className="aspect-[4/3] object-cover" />
+              <Img src={img.homeHero} alt="A smiling senior couple" width={224} height={168} className="aspect-[4/3] w-full object-cover" />
             </div>
 
             <div className="glass absolute -right-3 bottom-16 flex items-center gap-3 rounded-2xl py-3 pr-5 pl-3 sm:-right-8" style={{ animation: "float 9s ease-in-out -5s infinite" }}>
@@ -171,7 +171,7 @@ export default function HomePage() {
               className="group relative min-h-[26rem] overflow-hidden rounded-[2rem] bg-plum-900 lg:col-span-7 lg:row-span-2 lg:min-h-0"
               data-reveal="scale"
             >
-              <Image
+              <Img
                 src={img.homeHands}
                 alt="Supportive Hands"
                 sizes="(max-width: 1024px) 100vw, 720px"

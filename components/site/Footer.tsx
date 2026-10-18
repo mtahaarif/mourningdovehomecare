@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import { ArrowRight, ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import type { CSSProperties } from "react";
 import { TLink } from "./TLink";
@@ -58,7 +58,7 @@ export function Footer() {
         <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.15fr_0.7fr_1.45fr_1.05fr]">
           <div className="max-w-sm">
             <div className="inline-flex rounded-3xl bg-cream p-4 shadow-lift">
-              <Image src={img.logoMark} alt="Mourning Dove Home Care LLC" className="h-20 w-auto" sizes="120px" />
+              <Img src={img.logoMark} alt="Mourning Dove Home Care LLC" width={100} height={80} className="h-20 w-auto" />
             </div>
             <p className="mt-6 leading-relaxed text-white/60">
               Compassionate, high-quality, and personalized care to individuals in their homes — enabling them to maintain independence and

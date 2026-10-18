@@ -39,13 +39,16 @@ const nextConfig: NextConfig = {
   images: {
     qualities: [75, 85, 90],
     formats: ["image/avif", "image/webp"],
+    // Capped at 1920 (default goes to 3840): every candidate a browser picks is
+    // already well under 100KB as AVIF, and the srcset in each page shrinks.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
   async redirects() {
     // The original Wix site exposed an empty Pro Gallery viewer at this URL.
-    return [{ source: "/fullscreen-page-1", destination: "/", permanent: true }];
+    return [{ source: "/fullscreen-page-1", destination: "/", statusCode: 301 }];
   },
 };
 

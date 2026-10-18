@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import type { CSSProperties } from "react";
 import { ArrowRight, ArrowUpRight, MapPin, Phone } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
@@ -65,7 +65,7 @@ export default function AboutPage() {
                 className={`enter absolute w-[56%] overflow-hidden rounded-[1.75rem] border-[6px] border-white shadow-lift ${i === 1 ? "z-10" : ""}`}
                 style={{ "--x": f.x, "--r": f.r, "--d": `${200 + i * 120}ms` } as CSSProperties}
               >
-                <Image
+                <Img
                   src={f.src}
                   alt={f.alt}
                   sizes="(max-width: 640px) 60vw, 280px"
@@ -89,10 +89,11 @@ export default function AboutPage() {
               Compassionate care within the <span className="italic text-wine-700">comfort of home</span>
             </h2>
             <div className="relative mt-10 hidden overflow-hidden rounded-[2rem] shadow-lift lg:block" data-reveal="scale" style={d(160)}>
-              <Image
+              <Img
                 src={img.about2}
                 alt=""
-                sizes="480px"
+                width={480}
+                height={384}
                 className="parallax aspect-[5/4] w-full scale-110 object-cover object-[13%_50%]"
                 style={{ "--px-from": "-30px", "--px-to": "30px" } as CSSProperties}
               />

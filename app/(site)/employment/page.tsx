@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import type { CSSProperties } from "react";
 import { ArrowDown, Phone, Quote, Sparkles } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
@@ -42,7 +42,7 @@ export default function EmploymentPage() {
               Join Our <span className="text-gradient italic">Team!</span>
             </h1>
             <p className="enter-lcp mt-8 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl">
-              Are you passionate about providing exceptional care? We are constantly seeking compassionate individuals to join our dedicated
+              Are you passionate about providing exceptional care? We are constantly seeking <strong className="font-semibold text-white">compassionate individuals</strong> to join our dedicated
               team of home care professionals. If you are ready to make a difference, we invite you to explore career opportunities with us.
             </p>
             <div className="enter mt-10 flex flex-wrap gap-3" style={d(270)}>
@@ -57,10 +57,10 @@ export default function EmploymentPage() {
 
           <div className="enter relative mx-auto h-[26rem] w-full max-w-md sm:h-[30rem]" style={d(220)}>
             <div className="absolute top-0 right-0 w-[72%] rotate-[4deg] overflow-hidden rounded-[2rem] border-[6px] border-white/90 shadow-lift">
-              <Image src={img.employment1} alt="A caregiver holding a client's hands" sizes="320px" className="aspect-[4/3] w-full object-cover" />
+              <Img src={img.employment1} alt="A caregiver holding a client's hands" width={320} height={240} className="aspect-[4/3] w-full object-cover" />
             </div>
             <div className="absolute bottom-0 left-0 w-[70%] -rotate-[5deg] overflow-hidden rounded-[2rem] border-[6px] border-white/90 shadow-lift">
-              <Image src={img.services3} alt="A caregiver serving a meal to a senior woman" sizes="320px" className="aspect-[4/3] w-full object-cover" />
+              <Img src={img.services3} alt="A caregiver serving a meal to a senior woman" width={320} height={240} className="aspect-[4/3] w-full object-cover" />
             </div>
             <div className="glass absolute top-1/2 right-2 -translate-y-1/2 rounded-2xl p-4 text-plum-900" style={{ animation: "float 8s ease-in-out infinite" }}>
               <p className="flex items-center gap-2 text-sm font-bold">
@@ -133,7 +133,7 @@ export default function EmploymentPage() {
               Start your journey with us
             </h2>
             <figure className="relative mt-10 overflow-hidden rounded-[2rem] shadow-lift" data-reveal="scale" style={d(160)}>
-              <Image
+              <Img
                 src={img.employmentFriends}
                 alt="Two women smiling together outdoors"
                 sizes="(max-width: 1024px) 100vw, 500px"

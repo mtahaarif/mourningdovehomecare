@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import { Plus } from "lucide-react";
 import { useState, type CSSProperties } from "react";
 import { ODP_CARDS } from "@/lib/content";
@@ -22,7 +22,7 @@ export function OdpCards() {
               className="reveal-card relative h-[32rem] overflow-hidden rounded-[2rem] bg-plum-900 text-white shadow-lift ring-1 ring-white/10"
               data-open={isOpen}
             >
-              <Image src={card.image} alt={card.alt} sizes="(max-width: 768px) 100vw, 400px" className="reveal-img absolute inset-0 size-full object-cover" />
+              <Img src={card.image} alt={card.alt} sizes="(max-width: 768px) 100vw, 400px" className="reveal-img absolute inset-0 size-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-plum-950 via-plum-950/40 to-transparent" />
 
               <div className="reveal-panel absolute inset-x-0 bottom-0 bg-gradient-to-t from-plum-950 via-plum-950/95 to-plum-950/70 p-7 backdrop-blur-md">

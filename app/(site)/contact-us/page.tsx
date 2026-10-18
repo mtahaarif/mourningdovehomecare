@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import type { CSSProperties } from "react";
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
@@ -25,7 +25,7 @@ export default function ContactPage() {
     <PageTransition>
       {/* ───────────── Hero: photo + glass form ───────────── */}
       <section className="relative isolate overflow-hidden pt-36 pb-20 sm:pt-44 lg:pb-28">
-        <Image
+        <Img
           src={img.contactNurse}
           alt="Nurse greeting elderly man"
           preload
@@ -49,8 +49,8 @@ export default function ContactPage() {
             </p>
             <p className="enter mt-8 text-white/70" style={d(260)}>
               For all inquiries, call{" "}
-              <a href={PHONE_HREF} className="link-draw font-semibold text-white">
-                {PHONE}
+              <a href={PHONE_HREF} className="link-draw text-white">
+                <strong className="font-semibold">{PHONE}</strong>
               </a>
               <br />
               Or submit your details via our contact form.
@@ -155,10 +155,10 @@ export default function ContactPage() {
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <GlowCard tilt={10} className="grid h-48 place-items-center rounded-[2rem] bg-cream p-8 ring-1 ring-linen" data-reveal="up" style={d(100)}>
-                <Image src={img.partnerPa} alt="PA Health & Wellness" sizes="300px" className="h-auto max-h-24 w-auto" />
+                <Img src={img.partnerPa} alt="PA Health & Wellness" width={302} height={96} className="h-auto max-h-24 w-auto" />
               </GlowCard>
               <GlowCard glow="147 120 181" tilt={10} className="grid h-48 place-items-center rounded-[2rem] bg-cream p-8 ring-1 ring-linen" data-reveal="up" style={d(190)}>
-                <Image src={img.partnerUpmc} alt="UPMC Health Plan" sizes="160px" className="h-auto max-h-28 w-auto rounded-xl" />
+                <Img src={img.partnerUpmc} alt="UPMC Health Plan" width={122} height={112} className="h-auto max-h-28 w-auto rounded-xl" />
               </GlowCard>
             </div>
           </div>

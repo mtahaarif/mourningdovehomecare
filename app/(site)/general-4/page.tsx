@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import type { CSSProperties } from "react";
 import { Quote } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
@@ -107,7 +107,7 @@ export default function TestimonialsPage() {
               className="parallax overflow-hidden rounded-[1.25rem] shadow-lift sm:rounded-[2rem]"
               style={{ "--px-from": s.from, "--px-to": s.to } as CSSProperties}
             >
-              <Image src={s.src} alt="" sizes="(max-width: 640px) 33vw, 400px" className="aspect-[3/4] w-full object-cover" style={{ objectPosition: s.pos }} />
+              <Img src={s.src} alt="" sizes="(max-width: 640px) 33vw, 400px" className="aspect-[3/4] w-full object-cover" style={{ objectPosition: s.pos }} />
             </div>
           ))}
         </div>

@@ -10,6 +10,17 @@ import { EMAIL, NAV, PHONE, PHONE_HREF } from "@/lib/site";
 
 const LINKS = NAV.filter((item) => item.href !== "/contact-us");
 
+/** Visible label plus visually hidden context (see NAV in lib/site.ts). */
+function NavLabel({ item }: { item: (typeof NAV)[number] }) {
+  return (
+    <>
+      {item.sr[0] && <span className="sr-only">{item.sr[0]}</span>}
+      {item.label}
+      {item.sr[1] && <span className="sr-only">{item.sr[1]}</span>}
+    </>
+  );
+}
+
 export function Header() {
   const pathname = usePathname();
   const sheet = useRef<HTMLDialogElement>(null);
@@ -45,7 +56,9 @@ export function Header() {
                           <span className="absolute inset-0 rounded-full bg-white shadow-[0_6px_20px_-8px_rgb(40_26_57/0.35)] ring-1 ring-linen" />
                         </ViewTransition>
                       )}
-                      <span className="relative">{item.label}</span>
+                      <span className="relative">
+                        <NavLabel item={item} />
+                      </span>
                     </TLink>
                   </li>
                 );
@@ -117,7 +130,7 @@ export function Header() {
                     >
                       <span className="w-6 text-xs font-semibold text-white/40 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                       <span className={`font-display text-[2rem] leading-tight transition-colors ${active ? "text-dove-300" : "group-hover:text-dove-200"}`}>
-                        {item.label}
+                        <NavLabel item={item} />
                       </span>
                     </TLink>
                   </li>

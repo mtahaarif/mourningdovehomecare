@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { TLink } from "@/components/site/TLink";
@@ -54,7 +54,7 @@ export function HorizontalServices() {
                 href={s.href}
                 className="group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-[2rem] bg-plum-900 p-7 text-white shadow-lift ring-1 ring-black/5"
               >
-                <Image
+                <Img
                   src={s.image}
                   alt=""
                   sizes="(max-width: 640px) 82vw, 400px"

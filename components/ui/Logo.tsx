@@ -1,11 +1,11 @@
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import { img } from "@/lib/images";
 
 /** House-and-dove symbol from the logo, with the wordmark set as live type. */
 export function Logo({ light = false, className = "" }: { light?: boolean; className?: string }) {
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      <Image src={img.logoSymbol} alt="" className="h-9 w-auto sm:h-10" preload sizes="80px" />
+      <Img src={img.logoSymbol} alt="" width={66} height={40} className="h-9 w-auto sm:h-10" />
       <span className="flex flex-col leading-none">
         <span className={`font-display text-[1.15rem] font-semibold tracking-tight sm:text-[1.3rem] ${light ? "text-white" : "text-wine-700"}`}>
           Mourning Dove
