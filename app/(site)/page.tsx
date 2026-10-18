@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { ArrowRight, ArrowUpRight, CircleCheck, HeartHandshake, House, MapPin, Phone, Quote, Sparkles, Star } from "lucide-react";
@@ -13,17 +12,13 @@ import { HorizontalServices } from "@/components/sections/HorizontalServices";
 import { img } from "@/lib/images";
 import { MISSION, NON_SKILLED, SPECIALIZED, TESTIMONIALS } from "@/lib/content";
 import { PHONE, PHONE_HREF } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
-const title = "Mourning Dove Home Care LLC | home care services | 826 Mourning Dove Road, Eagleville, PA, USA";
-const description = "Mourning Dove Home Care LLC, Home Care Services, Montco";
-
-export const metadata: Metadata = {
-  title: { absolute: title },
-  description,
-  alternates: { canonical: "/" },
-  openGraph: { title, description, url: "/" },
-  twitter: { title, description },
-};
+export const metadata = pageMeta({
+  title: "Mourning Dove Home Care | Home Care in Blue Bell, PA",
+  description: "Compassionate, personalized home care in Blue Bell and Montgomery County, PA: companionship, personal care, respite care, ODP and supported employment.",
+  path: "/",
+});
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -50,18 +45,15 @@ export default function HomePage() {
               </span>
             </div>
 
-            <h1 className="enter mt-7 text-[3.1rem] leading-[0.98] font-medium text-plum-950 sm:text-7xl lg:text-[5.4rem]" style={d(90)}>
+            <h1 className="enter-lcp mt-7 text-[3.1rem] leading-[0.98] font-medium text-plum-950 sm:text-7xl lg:text-[5.4rem]">
               Quality Care is the{" "}
-              <span className="relative inline-block whitespace-nowrap">
+              <span className="scribble inline-block whitespace-nowrap">
                 <span className="text-gradient italic">Best Care</span>
-                <svg className="scribble absolute -bottom-3 left-0 h-4 w-full text-leaf-400" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M2 11 C 60 3, 120 3, 180 8 S 270 14, 298 5" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" pathLength={1} />
-                </svg>
               </span>
             </h1>
 
-            <p className="enter mt-8 max-w-xl text-lg leading-relaxed text-plum-700 sm:text-xl" style={d(180)}>
-              Our team understands the importance of delivering high-quality care in the comfort of your home — with services tailored to each
+            <p className="enter-lcp mt-8 max-w-xl text-lg leading-relaxed text-plum-700 sm:text-xl">
+              Our team understands the importance of delivering <strong className="font-semibold text-plum-900">high-quality care in the comfort of your home</strong> — with services tailored to each
               individual.
             </p>
 
@@ -87,7 +79,7 @@ export default function HomePage() {
           </div>
 
           {/* Image composition */}
-          <div className="enter relative mx-auto w-full max-w-[34rem]" style={d(200)}>
+          <div className="enter-lcp relative mx-auto w-full max-w-[34rem]">
             <svg className="absolute -top-10 -right-10 size-48 animate-spin-slow text-dove-300" viewBox="0 0 100 100" aria-hidden="true">
               <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="0.8" strokeDasharray="1 4" />
             </svg>
@@ -96,11 +88,10 @@ export default function HomePage() {
               <Image
                 src={img.homeCaregiver}
                 alt="A caregiver with a smiling senior woman outdoors"
-                fill
                 preload
-                placeholder="blur"
+                fetchPriority="high"
                 sizes="(max-width: 1024px) 135vw, 800px"
-                className="object-cover object-[55%_100%]"
+                className="absolute inset-0 size-full object-cover object-[55%_100%]"
                 style={{ scale: "1.45", transformOrigin: "55% 92%", animation: "float 14s ease-in-out infinite" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-plum-950/30 via-transparent to-transparent" />
@@ -115,7 +106,7 @@ export default function HomePage() {
               className="absolute -bottom-10 -left-6 w-44 rotate-[-5deg] overflow-hidden rounded-3xl border-[6px] border-white shadow-lift sm:-left-14 sm:w-56"
               style={{ animation: "float 10s ease-in-out -3s infinite" }}
             >
-              <Image src={img.homeHero} alt="A smiling senior couple" placeholder="blur" sizes="240px" className="aspect-[4/3] object-cover" />
+              <Image src={img.homeHero} alt="A smiling senior couple" sizes="240px" className="aspect-[4/3] object-cover" />
             </div>
 
             <div className="glass absolute -right-3 bottom-16 flex items-center gap-3 rounded-2xl py-3 pr-5 pl-3 sm:-right-8" style={{ animation: "float 9s ease-in-out -5s infinite" }}>
@@ -183,10 +174,8 @@ export default function HomePage() {
               <Image
                 src={img.homeHands}
                 alt="Supportive Hands"
-                fill
-                placeholder="blur"
                 sizes="(max-width: 1024px) 100vw, 720px"
-                className="clip-scrub object-cover transition-transform duration-[1.6s] group-hover:scale-105"
+                className="clip-scrub absolute inset-0 size-full object-cover transition-transform duration-[1.6s] group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-plum-950/90 via-plum-950/30 to-transparent" />
               <figcaption className="absolute inset-x-0 bottom-0 p-8 sm:p-10">
@@ -239,7 +228,7 @@ export default function HomePage() {
                   </ul>
                 </div>
                 <TLink href="/services#specialized" className="btn btn-light">
-                  Learn more <ArrowUpRight className="btn-arrow size-4" />
+                  Explore specialized care <ArrowUpRight className="btn-arrow size-4" />
                 </TLink>
               </div>
             </div>
@@ -266,9 +255,8 @@ export default function HomePage() {
 
         <Marquee speed={70} gap="1.25rem" className="edge-fade-x">
           {TESTIMONIALS.map((t) => (
-            <TLink
+            <figure
               key={t.name}
-              href="/general-4"
               className="group flex w-[22rem] shrink-0 flex-col justify-between rounded-[1.75rem] bg-white p-7 shadow-soft ring-1 ring-linen transition duration-500 hover:-translate-y-1 hover:shadow-lift sm:w-[26rem]"
             >
               <Quote className="size-8 text-dove-400 transition-transform duration-500 group-hover:-rotate-12" />
@@ -279,7 +267,7 @@ export default function HomePage() {
                 </span>
                 {t.name}
               </p>
-            </TLink>
+            </figure>
           ))}
         </Marquee>
       </section>

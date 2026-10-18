@@ -5,7 +5,17 @@ import { TLink } from "./TLink";
 import { FacebookIcon, InstagramIcon } from "@/components/ui/BrandIcons";
 import { OpenStatus } from "@/components/ui/OpenStatus";
 import { img } from "@/lib/images";
-import { ADDRESS, EMAIL, FACEBOOK, HOURS, INSTAGRAM, MAP_URL, NAV, PHONE, PHONE_HREF, SERVICE_AREA } from "@/lib/site";
+import { ADDRESS, EMAIL, FACEBOOK, HOURS, INSTAGRAM, MAP_URL, PHONE, PHONE_HREF, SERVICE_AREA } from "@/lib/site";
+
+// Descriptive anchors tell search engines (and screen-reader users) what each page is about.
+const FOOTER_LINKS = [
+  { href: "/", label: "Home care in Montgomery County" },
+  { href: "/about", label: "About Mourning Dove" },
+  { href: "/services", label: "Home care & ODP services" },
+  { href: "/general-4", label: "Client testimonials" },
+  { href: "/employment", label: "Careers: join our team" },
+  { href: "/contact-us", label: "Contact our office" },
+];
 
 export function Footer() {
   return (
@@ -59,19 +69,19 @@ export function Footer() {
                 href={INSTAGRAM}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="Instagram"
                 className="grid size-11 place-items-center rounded-full bg-white/8 ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:bg-gradient-to-br hover:from-[#f58529] hover:via-[#dd2a7b] hover:to-[#8134af] hover:ring-transparent"
               >
                 <InstagramIcon className="size-5" />
+                <span className="sr-only">Mourning Dove Home Care on Instagram</span>
               </a>
               <a
                 href={FACEBOOK}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="Facebook"
                 className="grid size-11 place-items-center rounded-full bg-white/8 ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:bg-[#1877f2] hover:ring-transparent"
               >
                 <FacebookIcon className="size-5" />
+                <span className="sr-only">Mourning Dove Home Care on Facebook</span>
               </a>
             </div>
           </div>
@@ -79,7 +89,7 @@ export function Footer() {
           <div>
             <h3 className="font-sans text-xs font-bold tracking-[0.2em] text-white/40 uppercase">Explore</h3>
             <ul className="mt-5 space-y-3">
-              {NAV.map((item) => (
+              {FOOTER_LINKS.map((item) => (
                 <li key={item.href}>
                   <TLink href={item.href} className="link-draw text-white/80 transition-colors hover:text-white">
                     {item.label}

@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { Accessibility, ArrowDown, Brain, ChevronDown, Info, Phone, Stethoscope } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
+import { pageMeta } from "@/lib/seo";
 import { GlowCard } from "@/components/ui/GlowCard";
 import { Icon } from "@/components/ui/Icon";
 import { OdpCards } from "@/components/sections/OdpCards";
@@ -10,16 +10,11 @@ import { img } from "@/lib/images";
 import { CONDITIONS, NON_SKILLED, ODP_INTRO, SERVICE_NOTE, SPECIALIZED_TEXT, SUPPORTED_EMPLOYMENT } from "@/lib/content";
 import { PHONE, PHONE_HREF } from "@/lib/site";
 
-const description =
-  "Mourning Dove Home Care LLC is a home care service provider based out of Montgomery County, Pennsylvania. Our mission is to deliver compassionate, high-quality, and personalized care to individuals in their homes. ";
-
-export const metadata: Metadata = {
-  title: "Services",
-  description,
-  alternates: { canonical: "/services" },
-  openGraph: { title: "Services | Home Care Agency", description, url: "/services" },
-  twitter: { title: "Services | Home Care Agency", description },
-};
+export const metadata = pageMeta({
+  title: "Home Care & ODP Services | Mourning Dove Home Care",
+  description: "Non-skilled home care, specialized dementia and post-operative care, supported employment and ODP services in Montgomery County, PA.",
+  path: "/services",
+});
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -61,11 +56,10 @@ export default function ServicesPage() {
               key={i}
               src={src}
               alt=""
-              fill
               preload={i === 0}
-              placeholder="blur"
+              fetchPriority={i === 0 ? "high" : "low"}
               sizes="100vw"
-              className="object-cover"
+              className="absolute inset-0 size-full object-cover"
               style={{ "--i": i } as CSSProperties}
             />
           ))}
@@ -76,11 +70,11 @@ export default function ServicesPage() {
           <span className="eyebrow enter text-dove-300" style={d(0)}>
             Our services
           </span>
-          <h1 className="enter mt-6 max-w-4xl text-5xl leading-[1] font-medium sm:text-7xl lg:text-[5.5rem]" style={d(90)}>
+          <h1 className="enter-lcp mt-6 max-w-4xl text-5xl leading-[1] font-medium sm:text-7xl lg:text-[5.5rem]">
             Care at home &amp; <span className="text-gradient italic">in the community</span>
           </h1>
-          <p className="enter mt-7 max-w-2xl text-lg text-white/75 sm:text-xl" style={d(180)}>
-            Non-skilled home care, specialized care, supported employment and ODP services — in Montgomery County, PA, and the surrounding
+          <p className="enter-lcp mt-7 max-w-2xl text-lg text-white/75 sm:text-xl">
+            Non-skilled home care, specialized care, supported employment and ODP services — in <strong className="font-semibold text-white">Montgomery County, PA</strong>, and the surrounding
             areas.
           </p>
           <nav aria-label="On this page" className="enter mt-10 flex flex-wrap gap-2" style={d(270)}>
@@ -193,7 +187,6 @@ export default function ServicesPage() {
               <Image
                 src={img.gardening}
                 alt="Woman Gardening Smiling"
-                placeholder="blur"
                 sizes="(max-width: 1024px) 100vw, 600px"
                 className="clip-scrub aspect-[4/5] w-full object-cover sm:aspect-[5/5]"
               />

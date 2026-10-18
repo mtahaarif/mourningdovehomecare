@@ -23,9 +23,14 @@ export function RevealObserver() {
     );
     const scan = () => document.querySelectorAll("[data-reveal]:not(.is-in)").forEach((el) => io.observe(el));
     scan();
-    const mo = new MutationObserver(scan);
+    // Batch rescans to at most one per frame, however many DOM mutations arrive.
+    let frame = 0;
+    const mo = new MutationObserver(() => {
+      if (!frame) frame = requestAnimationFrame(() => ((frame = 0), scan()));
+    });
     mo.observe(document.body, { childList: true, subtree: true });
     return () => {
+      cancelAnimationFrame(frame);
       io.disconnect();
       mo.disconnect();
     };

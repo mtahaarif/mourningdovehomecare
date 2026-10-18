@@ -1,18 +1,17 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { Quote } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
+import { pageMeta } from "@/lib/seo";
 import { TestimonialWall } from "@/components/sections/TestimonialWall";
 import { WordReveal } from "@/components/ui/WordReveal";
 import { img } from "@/lib/images";
 
-export const metadata: Metadata = {
-  title: "Testimonials",
-  alternates: { canonical: "/general-4" },
-  openGraph: { title: "Testimonials | Home Care Agency", url: "/general-4" },
-  twitter: { title: "Testimonials | Home Care Agency" },
-};
+export const metadata = pageMeta({
+  title: "Client Testimonials | Mourning Dove Home Care",
+  description: "Read Google reviews from families and clients of Mourning Dove Home Care, a home care provider serving Montgomery County, PA, and the surrounding areas.",
+  path: "/general-4",
+});
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -47,11 +46,11 @@ export default function TestimonialsPage() {
             <span className="size-2 rounded-full bg-gradient-to-r from-dove-500 to-leaf-500" />
             Google Reviews
           </span>
-          <h1 className="enter mt-7 text-5xl leading-[1] font-medium text-plum-950 sm:text-7xl lg:text-[5.5rem]" style={d(90)}>
+          <h1 className="enter-lcp mt-7 text-5xl leading-[1] font-medium text-plum-950 sm:text-7xl lg:text-[5.5rem]">
             See What People Are <span className="text-gradient italic">Saying</span>
           </h1>
-          <p className="enter mx-auto mt-7 max-w-xl text-lg text-plum-700 sm:text-xl" style={d(180)}>
-            Reviews shared on Google by the people we work with.
+          <p className="enter-lcp mx-auto mt-7 max-w-xl text-lg text-plum-700 sm:text-xl">
+            Reviews shared on <strong className="font-semibold text-plum-900">Google</strong> by the people we work with.
           </p>
         </div>
       </section>
@@ -108,7 +107,7 @@ export default function TestimonialsPage() {
               className="parallax overflow-hidden rounded-[1.25rem] shadow-lift sm:rounded-[2rem]"
               style={{ "--px-from": s.from, "--px-to": s.to } as CSSProperties}
             >
-              <Image src={s.src} alt="" placeholder="blur" sizes="(max-width: 640px) 33vw, 400px" className="aspect-[3/4] w-full object-cover" style={{ objectPosition: s.pos }} />
+              <Image src={s.src} alt="" sizes="(max-width: 640px) 33vw, 400px" className="aspect-[3/4] w-full object-cover" style={{ objectPosition: s.pos }} />
             </div>
           ))}
         </div>

@@ -13,15 +13,19 @@ const fmt = (hhmm: string) => {
   return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")}${h < 12 ? "am" : "pm"}`;
 };
 
+// Building an Intl.DateTimeFormat is expensive, and React reads the snapshot on every render, so build it once.
+let formatter: Intl.DateTimeFormat | undefined;
+
 /** Office status in the office's own time zone, e.g. "open|Open now · closes 5:00pm". */
 function computeStatus(): string {
-  const parts = new Intl.DateTimeFormat("en-US", {
+  formatter ??= new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
     weekday: "short",
     hour: "numeric",
     minute: "numeric",
     hourCycle: "h23",
-  }).formatToParts(new Date());
+  });
+  const parts = formatter.formatToParts(new Date());
   const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
   const day = DAY_NAMES.indexOf(get("weekday"));
   const now = Number(get("hour")) * 60 + Number(get("minute"));

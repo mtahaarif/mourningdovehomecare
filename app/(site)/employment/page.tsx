@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { ArrowDown, Phone, Quote, Sparkles } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
+import { FaqSection } from "@/components/sections/FaqSection";
+import { pageMeta } from "@/lib/seo";
 import { EmploymentForm } from "@/components/forms/EmploymentForm";
 import { GlowCard } from "@/components/ui/GlowCard";
 import { Icon } from "@/components/ui/Icon";
 import { Marquee } from "@/components/ui/Marquee";
 import { img } from "@/lib/images";
-import { CAREER_BENEFITS, POSITIONS } from "@/lib/content";
+import { CAREER_BENEFITS, EMPLOYMENT_FAQ, POSITIONS } from "@/lib/content";
 import { PHONE, PHONE_HREF } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Join Our Team",
-  alternates: { canonical: "/employment" },
-  openGraph: { title: "Join Our Team | Home Care Agency", url: "/employment" },
-  twitter: { title: "Join Our Team | Home Care Agency" },
-};
+export const metadata = pageMeta({
+  title: "Home Care Jobs in Montgomery County, PA | Mourning Dove",
+  description: "Join Mourning Dove Home Care: competitive pay, the ability to choose jobs, professional growth and training, and 401k plans. Apply online today.",
+  path: "/employment",
+});
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -38,10 +38,10 @@ export default function EmploymentPage() {
             <span className="eyebrow enter text-dove-300" style={d(0)}>
               Careers
             </span>
-            <h1 className="enter mt-6 text-6xl leading-[0.95] font-medium sm:text-7xl lg:text-[6rem]" style={d(90)}>
+            <h1 className="enter-lcp mt-6 text-6xl leading-[0.95] font-medium sm:text-7xl lg:text-[6rem]">
               Join Our <span className="text-gradient italic">Team!</span>
             </h1>
-            <p className="enter mt-8 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl" style={d(180)}>
+            <p className="enter-lcp mt-8 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl">
               Are you passionate about providing exceptional care? We are constantly seeking compassionate individuals to join our dedicated
               team of home care professionals. If you are ready to make a difference, we invite you to explore career opportunities with us.
             </p>
@@ -57,10 +57,10 @@ export default function EmploymentPage() {
 
           <div className="enter relative mx-auto h-[26rem] w-full max-w-md sm:h-[30rem]" style={d(220)}>
             <div className="absolute top-0 right-0 w-[72%] rotate-[4deg] overflow-hidden rounded-[2rem] border-[6px] border-white/90 shadow-lift">
-              <Image src={img.employment1} alt="A caregiver holding a client's hands" placeholder="blur" preload sizes="320px" className="aspect-[4/3] w-full object-cover" />
+              <Image src={img.employment1} alt="A caregiver holding a client's hands" sizes="320px" className="aspect-[4/3] w-full object-cover" />
             </div>
             <div className="absolute bottom-0 left-0 w-[70%] -rotate-[5deg] overflow-hidden rounded-[2rem] border-[6px] border-white/90 shadow-lift">
-              <Image src={img.services3} alt="A caregiver serving a meal to a senior woman" placeholder="blur" sizes="320px" className="aspect-[4/3] w-full object-cover" />
+              <Image src={img.services3} alt="A caregiver serving a meal to a senior woman" sizes="320px" className="aspect-[4/3] w-full object-cover" />
             </div>
             <div className="glass absolute top-1/2 right-2 -translate-y-1/2 rounded-2xl p-4 text-plum-900" style={{ animation: "float 8s ease-in-out infinite" }}>
               <p className="flex items-center gap-2 text-sm font-bold">
@@ -136,7 +136,6 @@ export default function EmploymentPage() {
               <Image
                 src={img.employmentFriends}
                 alt="Two women smiling together outdoors"
-                placeholder="blur"
                 sizes="(max-width: 1024px) 100vw, 500px"
                 className="parallax aspect-[4/3] w-full scale-110 object-cover"
                 style={{ "--px-from": "-24px", "--px-to": "24px" } as CSSProperties}
@@ -157,6 +156,7 @@ export default function EmploymentPage() {
           </div>
         </div>
       </section>
+      <FaqSection id="careers-faq" title="Working with us" faqs={EMPLOYMENT_FAQ} className="py-28 sm:py-36" />
     </PageTransition>
   );
 }

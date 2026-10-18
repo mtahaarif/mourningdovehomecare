@@ -1,21 +1,22 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
+import { FaqSection } from "@/components/sections/FaqSection";
+import { pageMeta } from "@/lib/seo";
+import { CONTACT_FAQ } from "@/lib/content";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { GlowCard } from "@/components/ui/GlowCard";
 import { CopyEmail } from "@/components/ui/CopyEmail";
 import { OpenStatus } from "@/components/ui/OpenStatus";
 import { img } from "@/lib/images";
-import { ADDRESS, EMAIL, HOURS, MAP_URL, PHONE, PHONE_HREF } from "@/lib/site";
+import { ADDRESS, EMAIL, FULL_ADDRESS, HOURS, MAP_URL, PHONE, PHONE_HREF } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Contact Us",
-  alternates: { canonical: "/contact-us" },
-  openGraph: { title: "Contact Us | Home Care Agency", url: "/contact-us" },
-  twitter: { title: "Contact Us | Home Care Agency" },
-};
+export const metadata = pageMeta({
+  title: "Contact Mourning Dove Home Care | Blue Bell, PA",
+  description: `Call ${PHONE} or send us a message. Our office is at ${FULL_ADDRESS}, open Mon–Thu 9–5 and Fri 9–12:30.`,
+  path: "/contact-us",
+});
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -27,11 +28,10 @@ export default function ContactPage() {
         <Image
           src={img.contactNurse}
           alt="Nurse greeting elderly man"
-          fill
           preload
-          placeholder="blur"
+          fetchPriority="high"
           sizes="100vw"
-          className="-z-20 object-cover object-[35%_50%]"
+          className="absolute inset-0 -z-20 size-full object-cover object-[35%_50%]"
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-plum-950/90 via-plum-950/70 to-plum-950/30" />
 
@@ -40,10 +40,10 @@ export default function ContactPage() {
             <span className="eyebrow enter text-dove-300" style={d(0)}>
               Get in touch
             </span>
-            <h1 className="enter mt-6 text-6xl leading-[0.95] font-medium sm:text-7xl lg:text-[5.75rem]" style={d(90)}>
+            <h1 className="enter-lcp mt-6 text-6xl leading-[0.95] font-medium sm:text-7xl lg:text-[5.75rem]">
               Contact <span className="text-gradient italic">Us</span>
             </h1>
-            <p className="enter mt-8 max-w-lg font-display text-xl leading-relaxed text-white/80 italic sm:text-2xl" style={d(180)}>
+            <p className="enter-lcp mt-8 max-w-lg font-display text-xl leading-relaxed text-white/80 italic sm:text-2xl">
               If you are seeking excellent home care services or would like more information, our advisors are available to assist you with any
               questions you may have.
             </p>
@@ -102,7 +102,7 @@ export default function ContactPage() {
               <span className="grid size-14 place-items-center rounded-2xl bg-wine-100 text-wine-600">
                 <Clock className="size-6" />
               </span>
-              <h3 className="mt-8 font-sans text-sm font-bold tracking-[0.18em] text-plum-400 uppercase">Hours of operation</h3>
+              <h3 className="mt-8 font-sans text-sm font-bold tracking-[0.18em] text-plum-400 uppercase">Office hours</h3>
               <dl className="mt-3 space-y-1.5 text-plum-800">
                 {HOURS.map((h) => (
                   <div key={h.label} className="flex justify-between gap-3">
@@ -164,6 +164,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <FaqSection id="contact-faq" title="Before you call" faqs={CONTACT_FAQ} />
     </PageTransition>
   );
 }

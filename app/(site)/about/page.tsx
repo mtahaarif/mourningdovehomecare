@@ -1,19 +1,19 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { ArrowRight, ArrowUpRight, MapPin, Phone } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
+import { FaqSection } from "@/components/sections/FaqSection";
+import { pageMeta } from "@/lib/seo";
 import { TLink } from "@/components/site/TLink";
 import { img } from "@/lib/images";
-import { COMMITMENT } from "@/lib/content";
+import { ABOUT_FAQ, COMMITMENT } from "@/lib/content";
 import { ADDRESS, MAP_URL, PHONE, PHONE_HREF } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "About",
-  alternates: { canonical: "/about" },
-  openGraph: { title: "About | Home Care Agency", url: "/about" },
-  twitter: { title: "About | Home Care Agency" },
-};
+export const metadata = pageMeta({
+  title: "About Mourning Dove Home Care | Montgomery County, PA",
+  description: "Mourning Dove Home Care is a home care service provider based in Montgomery County, Pa., servicing Montgomery County and the surrounding areas.",
+  path: "/about",
+});
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -38,12 +38,12 @@ export default function AboutPage() {
             <span className="eyebrow enter text-wine-600" style={d(0)}>
               About us
             </span>
-            <h1 className="enter mt-7 text-[2.6rem] leading-[1.04] font-medium text-plum-950 sm:text-6xl lg:text-[4.1rem]" style={d(90)}>
-              Mourning Dove Home Care is a home care service provider based out of{" "}
-              <span className="text-gradient italic">Montgomery County, Pa.</span>
+            <h1 className="enter-lcp mt-7 text-[2.9rem] leading-[1.02] font-medium text-plum-950 sm:text-6xl lg:text-[4.6rem]">
+              Home care rooted in <span className="text-gradient italic">Montgomery County, Pa.</span>
             </h1>
-            <p className="enter mt-7 max-w-lg text-lg text-plum-700 sm:text-xl" style={d(180)}>
-              Servicing Montgomery County and the surrounding areas.
+            <p className="enter-lcp mt-7 max-w-xl text-lg leading-relaxed text-plum-700 sm:text-xl">
+              <strong className="font-semibold text-plum-900">Mourning Dove Home Care</strong> is a home care service provider based out of
+              Montgomery County, Pa. Servicing Montgomery County and the surrounding areas.
             </p>
             <div className="enter mt-9 flex flex-wrap gap-3" style={d(270)}>
               <TLink href="/services" className="btn btn-primary">
@@ -68,8 +68,6 @@ export default function AboutPage() {
                 <Image
                   src={f.src}
                   alt={f.alt}
-                  placeholder="blur"
-                  preload={i === 1}
                   sizes="(max-width: 640px) 60vw, 280px"
                   className="aspect-[3/4] w-full object-cover"
                   style={{ objectPosition: f.pos }}
@@ -94,7 +92,6 @@ export default function AboutPage() {
               <Image
                 src={img.about2}
                 alt=""
-                placeholder="blur"
                 sizes="480px"
                 className="parallax aspect-[5/4] w-full scale-110 object-cover object-[13%_50%]"
                 style={{ "--px-from": "-30px", "--px-to": "30px" } as CSSProperties}
@@ -133,10 +130,10 @@ export default function AboutPage() {
               Where we serve
             </span>
             <h2 id="serve-title" className="mt-5 text-4xl leading-[1.05] font-medium sm:text-6xl" data-reveal="up" style={d(80)}>
-              Rooted in <span className="text-gradient italic">Montgomery County</span>
+              Servicing Montgomery County <span className="text-gradient italic">and the surrounding areas</span>
             </h2>
             <p className="mt-6 max-w-lg text-lg text-white/70" data-reveal="up" style={d(160)}>
-              Servicing Montgomery County and the surrounding areas.
+              Our office is in Blue Bell, PA. Stop by, or get directions below.
             </p>
 
             <a
@@ -187,6 +184,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <FaqSection id="about-faq" title="About our care" faqs={ABOUT_FAQ} />
     </PageTransition>
   );
 }

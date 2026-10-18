@@ -57,10 +57,8 @@ export function HorizontalServices() {
                 <Image
                   src={s.image}
                   alt=""
-                  fill
-                  placeholder="blur"
                   sizes="(max-width: 640px) 82vw, 400px"
-                  className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-out-expo)] group-hover:scale-110"
+                  className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] ease-[var(--ease-out-expo)] group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-plum-950/95 via-plum-950/45 to-plum-950/5" />
                 <div className="absolute inset-x-0 top-0 flex items-start justify-between p-6">

@@ -1,5 +1,7 @@
 import type { StaticImageData } from "next/image";
 import { img } from "./images";
+import type { Faq } from "./seo";
+import { FULL_ADDRESS, PHONE } from "./site";
 
 /*
  * All copy below comes from the original site, except the one-line
@@ -189,3 +191,67 @@ export const COMMITMENT = [
     text: "Above all, we are committed to providing compassionate care within the comfort of the client's home.",
   },
 ] as const;
+
+/*
+ * FAQs. Every answer restates facts already published on the site
+ * (services, hours, address, service area, positions and benefits).
+ */
+const HOURS_TEXT = "Monday–Thursday 9:00am–5:00pm and Friday 9:00am–12:30pm (Eastern Time)";
+
+export const ABOUT_FAQ: Faq[] = [
+  {
+    q: "Who is Mourning Dove Home Care?",
+    a: "Mourning Dove Home Care LLC is a home care service provider based out of Montgomery County, Pa., servicing Montgomery County and the surrounding areas.",
+    link: { href: "/services", label: "Explore our home care services" },
+  },
+  {
+    q: "What kind of care do you provide?",
+    a: "We provide non-skilled home care — companionship, meal planning, personal care/hygiene, light housekeeping, support for ADL's and IADL's, medication reminders and respite care — as well as specialized care for individuals with specific needs, such as Alzheimer's or dementia, physical disabilities, and post-operative care.",
+    link: { href: "/services#home-care", label: "See every non-skilled home care service" },
+  },
+  {
+    q: "Do you work with my loved one's doctor?",
+    a: "Yes. We collaborate closely with the patient's physician to implement their directives, acting as their eyes and ears in the process.",
+  },
+  {
+    q: "Do you support people with intellectual and developmental disabilities?",
+    a: "Yes. Our ODP services and Supported Employment Services support individuals with intellectual and developmental disabilities, including autism, in Montgomery County, PA, and the surrounding counties.",
+    link: { href: "/services#odp", label: "Learn about ODP services and eligibility" },
+  },
+];
+
+export const EMPLOYMENT_FAQ: Faq[] = [
+  {
+    q: "What positions are you hiring for?",
+    a: "We are hiring for Home Care Aide, Registered Nurse, Care Coordinator, Scheduler and Office Assistant positions.",
+  },
+  {
+    q: "What benefits do you offer?",
+    a: "Competitive pay, the ability to choose jobs, professional growth and training, and 401k plans — with more benefits soon to come.",
+  },
+  {
+    q: "How do I apply?",
+    a: `Complete the application on this page, or call our office at ${PHONE} during office hours: ${HOURS_TEXT}.`,
+  },
+  {
+    q: "Where would I be working?",
+    a: `Our team provides care in clients' homes across Montgomery County, PA, and the surrounding areas. Our office is at ${FULL_ADDRESS}.`,
+    link: { href: "/about", label: "Learn more about Mourning Dove Home Care" },
+  },
+];
+
+export const CONTACT_FAQ: Faq[] = [
+  {
+    q: "How do I get started with home care?",
+    a: `Call us at ${PHONE} or send your details through the contact form. Our advisors are available to assist you with any questions you may have.`,
+    link: { href: "/services", label: "Browse our home care services" },
+  },
+  { q: "What are your office hours?", a: `${HOURS_TEXT}.` },
+  { q: "Where is your office?", a: `Our office is at ${FULL_ADDRESS}.` },
+  { q: "Which areas do you serve?", a: "Montgomery County, PA, and the surrounding areas." },
+  {
+    q: "Are you hiring?",
+    a: "Yes. We are constantly seeking compassionate individuals to join our dedicated team of home care professionals.",
+    link: { href: "/employment", label: "See open positions and apply" },
+  },
+];

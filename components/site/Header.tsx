@@ -66,8 +66,9 @@ export function Header() {
             >
               Contact Us <ArrowUpRight className="btn-arrow size-4" />
             </TLink>
-            <a href={PHONE_HREF} aria-label={`Call ${PHONE}`} className="grid size-11 place-items-center rounded-full bg-white text-plum-900 ring-1 ring-linen sm:hidden">
-              <Phone className="size-[18px]" />
+            <a href={PHONE_HREF} className="grid size-11 place-items-center rounded-full bg-white text-plum-900 ring-1 ring-linen sm:hidden">
+              <Phone className="size-[18px]" aria-hidden="true" />
+              <span className="sr-only">Call {PHONE}</span>
             </a>
             <button
               type="button"
