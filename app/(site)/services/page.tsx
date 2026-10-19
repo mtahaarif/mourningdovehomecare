@@ -1,5 +1,5 @@
 import { Img } from "@/components/ui/Img";
-import type { CSSProperties } from "react";
+import { EagerImg } from "@/components/ui/EagerImg";
 import { Accessibility, ArrowDown, Brain, ChevronDown, Info, Phone, Stethoscope } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
 import { pageMeta } from "@/lib/seo";
@@ -16,14 +16,12 @@ export const metadata = pageMeta({
   path: "/services",
 });
 
-const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
-
 const JUMP = [
   { label: "Home care", href: "#home-care" },
   { label: "Specialized care", href: "#specialized" },
   { label: "Supported employment", href: "#supported-employment" },
   { label: "ODP services", href: "#odp" },
-  { label: "Eligibility", href: "#eligibility" },
+  { label: "Eligible conditions", href: "#eligibility" },
 ];
 
 const CARD_TONES = ["bg-white", "bg-dove-50", "bg-leaf-50", "bg-wine-50", "bg-sand", "bg-plum-50", "bg-white"];
@@ -38,10 +36,10 @@ const ICON_TONES = [
 ];
 
 const SPECIALIZED_CARDS = [
-  { title: "Alzheimer's or dementia", icon: Brain, glow: "90 180 230" },
-  { title: "Physical disabilities", icon: Accessibility, glow: "22 178 94" },
-  { title: "Post-operative care", icon: Stethoscope, glow: "222 99 113" },
-];
+  { title: "Alzheimer's or dementia", icon: Brain, glow: "dove" },
+  { title: "Physical disabilities", icon: Accessibility, glow: "leaf" },
+  { title: "Post-operative care", icon: Stethoscope, glow: "wine" },
+] as const;
 
 export default function ServicesPage() {
   const n = NON_SKILLED.length;
@@ -51,23 +49,26 @@ export default function ServicesPage() {
       {/* ───────────── Hero: Ken Burns crossfade + glass jump links ───────────── */}
       <section className="noise relative isolate flex min-h-[44rem] items-end overflow-hidden bg-plum-950 pt-40 pb-16 text-white sm:min-h-[48rem] sm:pb-20">
         <div className="kb absolute inset-0 -z-10" aria-hidden="true">
-          {[img.services1, img.services2, img.services3].map((src, i) => (
-            <Img
-              key={i}
-              src={src}
-              alt=""
-              preload={i === 0}
-              fetchPriority={i === 0 ? "high" : "low"}
-              sizes="100vw"
-              className="absolute inset-0 size-full object-cover"
-              style={{ "--i": i } as CSSProperties}
-            />
-          ))}
+          {[img.services1, img.services2, img.services3].map((src, i) => {
+            // Only the first slide is visible on load; it is the likely LCP image.
+            const Slide = i === 0 ? EagerImg : Img;
+            return (
+              <Slide
+                key={i}
+                src={src}
+                alt=""
+                preload={i === 0}
+                fetchPriority={i === 0 ? "high" : "low"}
+                sizes="100vw"
+                className={`absolute inset-0 size-full object-cover [--i:${i}]`}
+              />
+            );
+          })}
         </div>
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-plum-950 via-plum-950/70 to-plum-950/30" />
 
         <div className="shell">
-          <span className="eyebrow enter text-dove-300" style={d(0)}>
+          <span className="eyebrow enter text-dove-300 [--d:0ms]">
             Our services
           </span>
           <h1 className="enter-lcp mt-6 max-w-4xl text-5xl leading-[1] font-medium sm:text-7xl lg:text-[5.5rem]">
@@ -77,7 +78,7 @@ export default function ServicesPage() {
             Non-skilled home care, specialized care, supported employment and ODP services — in <strong className="font-semibold text-white">Montgomery County, PA</strong>, and the surrounding
             areas.
           </p>
-          <nav aria-label="On this page" className="enter mt-10 flex flex-wrap gap-2" style={d(270)}>
+          <nav aria-label="On this page" className="enter mt-10 flex flex-wrap gap-2 [--d:270ms]">
             {JUMP.map((j) => (
               <a
                 key={j.href}
@@ -99,14 +100,14 @@ export default function ServicesPage() {
             <span className="eyebrow text-wine-600" data-reveal="up">
               Home care
             </span>
-            <h2 id="home-care-title" className="mt-5 text-4xl leading-[1.05] font-medium sm:text-5xl" data-reveal="up" style={d(80)}>
+            <h2 id="home-care-title" className="mt-5 text-4xl leading-[1.05] font-medium [--d:80ms] sm:text-5xl" data-reveal="up">
               Non-Skilled Home Care Services
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-plum-700" data-reveal="up" style={d(160)}>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-plum-700 [--d:160ms]" data-reveal="up">
               Everyday support that helps your loved one stay safe, comfortable and independent at home.
             </p>
 
-            <details className="disclosure mt-8 rounded-3xl bg-white p-5 ring-1 ring-linen" data-reveal="up" style={d(240)}>
+            <details className="disclosure mt-8 rounded-3xl bg-white p-5 ring-1 ring-linen [--d:240ms]" data-reveal="up">
               <summary className="flex items-center gap-3 font-semibold text-plum-900">
                 <span className="grid size-9 place-items-center rounded-full bg-dove-100 text-dove-700">
                   <Info className="size-4" />
@@ -118,13 +119,9 @@ export default function ServicesPage() {
             </details>
           </div>
 
-          <ul className="stack relative space-y-6 pb-8" style={{ "--n": n } as CSSProperties}>
+          <ul className={`stack relative space-y-6 pb-8 [--n:${n}]`}>
             {NON_SKILLED.map((s, i) => (
-              <li
-                key={s.title}
-                className="stack-card"
-                style={{ "--i": i, "--stack-scale": 1 - (n - 1 - i) * 0.035, "--stack-dim": i === n - 1 ? 0 : 1 } as CSSProperties}
-              >
+              <li key={s.title} className={`stack-card [--i:${i}]`}>
                 <article className={`stack-inner relative overflow-hidden rounded-[2rem] p-8 shadow-lift ring-1 ring-linen sm:p-10 ${CARD_TONES[i]}`}>
                   <span
                     className="pointer-events-none absolute -top-6 right-4 font-display text-[9rem] leading-none font-semibold text-plum-900/[0.05] select-none"
@@ -153,7 +150,11 @@ export default function ServicesPage() {
       </section>
 
       {/* ───────────── Specialized care ───────────── */}
-      <section id="specialized" className="pb-28 sm:pb-36" aria-labelledby="specialized-title">
+      <section
+        id="specialized"
+        className="defer-render pb-28 [--defer-h:60rem] sm:pb-36 lg:[--defer-h:40rem]"
+        aria-labelledby="specialized-title"
+      >
         <div className="shell">
           <div className="spin-border rounded-[2.5rem]" data-reveal="scale">
             <div className="relative overflow-hidden rounded-[2.5rem] bg-white px-8 py-14 text-center sm:px-14 sm:py-20">
@@ -164,7 +165,7 @@ export default function ServicesPage() {
               </h2>
               <ul className="relative mt-12 grid gap-4 text-left sm:grid-cols-3">
                 {SPECIALIZED_CARDS.map((c, i) => (
-                  <li key={c.title} data-reveal="up" style={d(120 + i * 100)}>
+                  <li key={c.title} data-reveal="up" className={`[--d:${120 + i * 100}ms]`}>
                     <GlowCard glow={c.glow} tilt={6} className="flex h-full items-center gap-4 rounded-3xl bg-cream p-6 ring-1 ring-linen">
                       <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-white shadow-soft">
                         <c.icon className="size-6 text-plum-800" />
@@ -180,7 +181,11 @@ export default function ServicesPage() {
       </section>
 
       {/* ───────────── Supported employment ───────────── */}
-      <section id="supported-employment" className="relative overflow-hidden bg-sand/70 py-28 sm:py-36" aria-labelledby="se-title">
+      <section
+        id="supported-employment"
+        className="defer-render relative overflow-hidden bg-sand/70 py-28 [--defer-h:80rem] sm:py-36 lg:[--defer-h:50rem]"
+        aria-labelledby="se-title"
+      >
         <div className="shell grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
           <div className="relative">
             <div className="overflow-hidden rounded-[2.5rem] shadow-lift">
@@ -192,9 +197,8 @@ export default function ServicesPage() {
               />
             </div>
             <div
-              className="glass absolute -bottom-8 left-6 flex items-center gap-4 rounded-3xl p-4 pr-6 sm:-right-8 sm:left-auto"
+              className="glass absolute -bottom-8 left-6 flex items-center gap-4 rounded-3xl p-4 pr-6 [--d:200ms] sm:-right-8 sm:left-auto"
               data-reveal="up"
-              style={d(200)}
             >
               <Img src={img.partnerUpmc} alt="UPMC Health Plan" width={61} height={56} className="h-14 w-auto rounded-xl" />
               <span className="text-sm leading-tight">
@@ -208,13 +212,13 @@ export default function ServicesPage() {
             <span className="eyebrow text-leaf-700" data-reveal="up">
               Supported employment
             </span>
-            <h2 id="se-title" className="mt-5 text-4xl leading-[1.05] font-medium sm:text-6xl" data-reveal="up" style={d(80)}>
+            <h2 id="se-title" className="mt-5 text-4xl leading-[1.05] font-medium [--d:80ms] sm:text-6xl" data-reveal="up">
               Supported Employment <span className="italic text-wine-700">Services</span>
             </h2>
-            <p className="mt-7 text-xl leading-relaxed text-plum-700" data-reveal="up" style={d(160)}>
+            <p className="mt-7 text-xl leading-relaxed text-plum-700 [--d:160ms]" data-reveal="up">
               {SUPPORTED_EMPLOYMENT}
             </p>
-            <a href={PHONE_HREF} className="btn btn-primary mt-10" data-reveal="up" style={d(240)}>
+            <a href={PHONE_HREF} className="btn btn-primary mt-10 [--d:240ms]" data-reveal="up">
               <span className="btn-icon">
                 <Phone className="size-4" />
               </span>
@@ -225,10 +229,14 @@ export default function ServicesPage() {
       </section>
 
       {/* ───────────── ODP services + eligible conditions ───────────── */}
-      <section id="odp" className="noise relative mb-24 overflow-hidden rounded-b-[3rem] bg-plum-950 py-28 text-white sm:mb-32 sm:rounded-b-[4rem] sm:py-36" aria-labelledby="odp-title">
+      <section
+        id="odp"
+        className="noise defer-render relative mb-24 overflow-hidden rounded-b-[3rem] bg-plum-950 py-28 text-white [--defer-h:180rem] sm:mb-32 sm:rounded-b-[4rem] sm:py-36 md:[--defer-h:90rem]"
+        aria-labelledby="odp-title"
+      >
         <div className="aurora" aria-hidden="true">
-          <span style={{ "--c": "#1f7dba", "--s": "36rem", top: "-12rem", left: "-10rem", "--o": 0.3 } as CSSProperties} />
-          <span style={{ "--c": "#a51f33", "--s": "28rem", bottom: "-8rem", right: "-8rem", "--o": 0.22, "--delay": "-10s" } as CSSProperties} />
+          <span className="top-[-12rem] left-[-10rem] [--c:#1f7dba] [--o:0.3] [--s:36rem]" />
+          <span className="right-[-8rem] bottom-[-8rem] [--c:#a51f33] [--delay:-10s] [--o:0.22] [--s:28rem]" />
         </div>
 
         <div className="shell relative">
@@ -236,10 +244,10 @@ export default function ServicesPage() {
             <span className="eyebrow text-dove-300" data-reveal="up">
               Office of Developmental Programs
             </span>
-            <h2 id="odp-title" className="mt-5 text-5xl leading-[1] font-medium sm:text-7xl" data-reveal="up" style={d(80)}>
+            <h2 id="odp-title" className="mt-5 text-5xl leading-[1] font-medium [--d:80ms] sm:text-7xl" data-reveal="up">
               ODP <span className="text-gradient italic">Services</span>
             </h2>
-            <p className="mt-7 text-lg leading-relaxed text-white/70 sm:text-xl" data-reveal="up" style={d(160)}>
+            <p className="mt-7 text-lg leading-relaxed text-white/70 [--d:160ms] sm:text-xl" data-reveal="up">
               {ODP_INTRO}
             </p>
           </div>
@@ -254,7 +262,7 @@ export default function ServicesPage() {
             </h3>
             <ul className="mt-10 flex flex-wrap gap-3">
               {CONDITIONS.map((c, i) => (
-                <li key={c} data-reveal="scale" style={d(i * 60)}>
+                <li key={c} data-reveal="scale" className={`[--d:${i * 60}ms]`}>
                   <span className="glass-dark inline-flex items-center gap-2.5 rounded-full px-5 py-3 font-medium transition duration-500 hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-[0_0_30px_-6px_rgb(90_180_230/0.6)]">
                     <span className="size-2 rounded-full bg-gradient-to-br from-dove-300 to-leaf-400" />
                     {c}

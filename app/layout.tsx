@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
   // Preview deployments duplicate production, so keep them out of search results.
   ...(IS_PREVIEW ? { robots: { index: false, follow: false } } : {}),
+  // Search Console verifies a *.vercel.app property by meta tag (there is no DNS to edit).
+  ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
 };
 
 export const viewport: Viewport = {

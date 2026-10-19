@@ -1,6 +1,5 @@
 import { Img } from "@/components/ui/Img";
 import { ArrowRight, ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
-import type { CSSProperties } from "react";
 import { TLink } from "./TLink";
 import { FacebookIcon, InstagramIcon } from "@/components/ui/BrandIcons";
 import { OpenStatus } from "@/components/ui/OpenStatus";
@@ -19,11 +18,11 @@ const FOOTER_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="noise relative overflow-hidden bg-plum-950 text-white">
+    <footer className="noise defer-render relative overflow-hidden bg-plum-950 text-white [--defer-h:130rem] sm:[--defer-h:90rem] lg:[--defer-h:70rem]">
       <div className="aurora" aria-hidden="true">
-        <span style={{ "--c": "#3399d6", "--s": "38rem", top: "-14rem", left: "-10rem", "--o": 0.28 } as CSSProperties} />
-        <span style={{ "--c": "#a51f33", "--s": "30rem", top: "6rem", right: "-12rem", "--o": 0.22, "--delay": "-8s" } as CSSProperties} />
-        <span style={{ "--c": "#16b25e", "--s": "26rem", bottom: "-14rem", left: "35%", "--o": 0.16, "--delay": "-14s" } as CSSProperties} />
+        <span className="top-[-14rem] left-[-10rem] [--c:#3399d6] [--o:0.28] [--s:38rem]" />
+        <span className="top-[6rem] right-[-12rem] [--c:#a51f33] [--delay:-8s] [--o:0.22] [--s:30rem]" />
+        <span className="bottom-[-14rem] left-[35%] [--c:#16b25e] [--delay:-14s] [--o:0.16] [--s:26rem]" />
       </div>
 
       <div className="shell relative">
@@ -35,7 +34,7 @@ export function Footer() {
               Quality care is the <span className="text-gradient italic">best care.</span>
             </h2>
           </div>
-          <div data-reveal="up" style={{ "--d": "120ms" } as CSSProperties}>
+          <div className="[--d:120ms]" data-reveal="up">
             <p className="text-lg leading-relaxed text-white/70">
               If you are seeking excellent home care services or would like more information, our advisors are available to assist you with
               any questions you may have.

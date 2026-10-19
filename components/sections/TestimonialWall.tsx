@@ -1,11 +1,13 @@
 "use client";
 
-import { ArrowUpRight, Quote, X } from "lucide-react";
+import { Quote, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { Marquee } from "@/components/ui/Marquee";
-import { TESTIMONIALS, type Testimonial } from "@/lib/content";
+import { TESTIMONIALS, type Testimonial } from "@/lib/testimonials";
 
 const ACCENTS = ["text-dove-500", "text-leaf-500"];
+// Loop times differ per column so the columns drift against each other.
+const COLUMN_SPEEDS = ["[--speed:58s]", "[--speed:72s]", "[--speed:64s]"];
 // Each column cycles through a different order so neighbours never match.
 const COLUMNS = [
   [0, 3, 1, 4],
@@ -13,11 +15,33 @@ const COLUMNS = [
   [4, 1, 5, 2],
 ];
 
-function Card({ t, index, onOpen }: { t: Testimonial; index: number; onOpen: () => void }) {
+/**
+ * The card icons (lucide Quote and ArrowUpRight), drawn once and referenced by every
+ * card: the wall renders 18 cards, and inlining each icon repeated ~10KB of markup.
+ */
+function IconSprite() {
+  const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" } as const;
+  return (
+    <svg aria-hidden="true" className="absolute size-0 overflow-hidden">
+      <symbol id="review-quote" viewBox="0 0 24 24" {...stroke}>
+        <path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" />
+        <path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" />
+      </symbol>
+      <symbol id="review-more" viewBox="0 0 24 24" {...stroke}>
+        <path d="M7 7h10v10" />
+        <path d="M7 17 17 7" />
+      </symbol>
+    </svg>
+  );
+}
+
+function Card({ t, index, onOpen, className = "" }: { t: Testimonial; index: number; onOpen: () => void; className?: string }) {
   const long = t.paragraphs.join(" ").length > 220;
   return (
-    <article className="group rounded-[1.75rem] bg-white p-7 shadow-soft ring-1 ring-linen transition duration-500 hover:shadow-lift">
-      <Quote className={`size-8 ${ACCENTS[index % 2]} transition-transform duration-500 group-hover:-rotate-12`} />
+    <article className={`group rounded-[1.75rem] bg-white p-7 shadow-soft ring-1 ring-linen transition duration-500 hover:shadow-lift ${className}`}>
+      <svg className={`size-8 ${ACCENTS[index % 2]} transition-transform duration-500 group-hover:-rotate-12`} aria-hidden="true">
+        <use href="#review-quote" />
+      </svg>
       <p className="mt-4 line-clamp-6 leading-relaxed text-plum-800">{t.paragraphs.join(" ")}</p>
       <div className="mt-6 flex items-center justify-between gap-4">
         <p className="flex items-center gap-3 text-sm font-semibold text-plum-900">
@@ -32,7 +56,10 @@ function Card({ t, index, onOpen }: { t: Testimonial; index: number; onOpen: () 
             onClick={onOpen}
             className="inline-flex shrink-0 items-center gap-1 rounded-full bg-sand px-3 py-1.5 text-xs font-semibold text-plum-800 transition hover:bg-plum-900 hover:text-white"
           >
-            Read more <ArrowUpRight className="size-3.5" />
+            Read more
+            <svg className="size-3.5" aria-hidden="true">
+              <use href="#review-more" />
+            </svg>
           </button>
         )}
       </div>
@@ -52,10 +79,11 @@ export function TestimonialWall() {
 
   return (
     <>
+      <IconSprite />
       {/* Desktop: infinite vertical columns */}
       <div className="edge-fade-y hidden h-[52rem] grid-cols-3 gap-5 overflow-hidden lg:grid">
         {COLUMNS.map((col, c) => (
-          <Marquee key={c} vertical reverse={c === 1} speed={[58, 72, 64][c]} gap="1.25rem">
+          <Marquee key={c} vertical reverse={c === 1} className={COLUMN_SPEEDS[c]}>
             {col.map((i) => (
               <Card key={i} t={TESTIMONIALS[i]} index={i} onOpen={() => open(TESTIMONIALS[i])} />
             ))}
@@ -65,11 +93,9 @@ export function TestimonialWall() {
 
       {/* Mobile / tablet: infinite horizontal carousel */}
       <div className="-mx-5 lg:hidden sm:-mx-10">
-        <Marquee speed={90} gap="1rem" className="edge-fade-x">
+        <Marquee className="edge-fade-x [--gap:1rem] [--speed:90s]">
           {TESTIMONIALS.map((t, i) => (
-            <div key={t.name} className="flex w-[17.5rem] shrink-0 sm:w-[22rem] [&>article]:flex [&>article]:w-full [&>article]:flex-col [&>article]:justify-between">
-              <Card t={t} index={i} onOpen={() => open(t)} />
-            </div>
+            <Card key={t.name} t={t} index={i} onOpen={() => open(t)} className="flex w-[17.5rem] shrink-0 flex-col justify-between sm:w-[22rem]" />
           ))}
         </Marquee>
       </div>

@@ -1,5 +1,4 @@
 import { getImageProps, type ImageProps } from "next/image";
-import { preload as preloadResource } from "react-dom";
 
 /** Widest candidate used for the plain `src` fallback. */
 const FALLBACK_MAX_WIDTH = 1080;
@@ -10,8 +9,10 @@ const FALLBACK_MAX_WIDTH = 1080;
  * - Browsers choose from the full `srcset`, exactly as with next/image.
  * - The `src` fallback, read only by clients without srcset support (mostly
  *   crawlers), is a mid-size candidate instead of the very largest one.
- * - `preload` marks a likely LCP image: it loads eagerly with high priority
- *   and a <link rel="preload"> is hoisted into the document head.
+ * - `preload` marks a likely LCP image: it loads eagerly with high priority,
+ *   and React's server renderer adds a <link rel="preload"> to the document head
+ *   for it (as it does for every non-lazy <img>). Render eager images through
+ *   EagerImg so that preload stays out of the RSC payload (see EagerImg.tsx).
  */
 export function Img({ preload = false, ...props }: ImageProps) {
   const { props: img } = getImageProps({ ...props, preload });
@@ -26,10 +27,6 @@ export function Img({ preload = false, ...props }: ImageProps) {
     const sized = candidates.filter((c) => c.width > 0 && c.width <= FALLBACK_MAX_WIDTH);
     // Width descriptors: largest ≤ 1080px. Density descriptors (1x, 2x): the 1x source.
     src = (sized.length ? sized[sized.length - 1] : candidates[0]).url;
-  }
-
-  if (preload) {
-    preloadResource(src, { as: "image", imageSrcSet: srcSet, imageSizes: sizes, fetchPriority: "high" });
   }
 
   // Drop next/image's `color: transparent` (it hides alt text while loading); keep any caller styles.

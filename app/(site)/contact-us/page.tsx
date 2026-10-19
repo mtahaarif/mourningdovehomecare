@@ -1,5 +1,5 @@
 import { Img } from "@/components/ui/Img";
-import type { CSSProperties } from "react";
+import { EagerImg } from "@/components/ui/EagerImg";
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
 import { FaqSection } from "@/components/sections/FaqSection";
@@ -18,14 +18,12 @@ export const metadata = pageMeta({
   path: "/contact-us",
 });
 
-const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
-
 export default function ContactPage() {
   return (
     <PageTransition>
       {/* ───────────── Hero: photo + glass form ───────────── */}
       <section className="relative isolate overflow-hidden pt-36 pb-20 sm:pt-44 lg:pb-28">
-        <Img
+        <EagerImg
           src={img.contactNurse}
           alt="Nurse greeting elderly man"
           preload
@@ -37,7 +35,7 @@ export default function ContactPage() {
 
         <div className="shell grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
           <div className="text-white">
-            <span className="eyebrow enter text-dove-300" style={d(0)}>
+            <span className="eyebrow enter text-dove-300 [--d:0ms]">
               Get in touch
             </span>
             <h1 className="enter-lcp mt-6 text-6xl leading-[0.95] font-medium sm:text-7xl lg:text-[5.75rem]">
@@ -47,7 +45,7 @@ export default function ContactPage() {
               If you are seeking excellent home care services or would like more information, our advisors are available to assist you with any
               questions you may have.
             </p>
-            <p className="enter mt-8 text-white/70" style={d(260)}>
+            <p className="enter mt-8 text-white/70 [--d:260ms]">
               For all inquiries, call{" "}
               <a href={PHONE_HREF} className="link-draw text-white">
                 <strong className="font-semibold">{PHONE}</strong>
@@ -57,7 +55,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="enter glass rounded-[2.5rem] !bg-white/85 p-6 shadow-lift sm:p-10" style={d(200)}>
+          <div className="enter glass rounded-[2.5rem] !bg-white/85 p-6 shadow-lift [--d:200ms] sm:p-10">
             <h2 className="mb-6 text-2xl font-medium text-plum-950 sm:text-3xl">Send us a message</h2>
             <ContactForm />
           </div>
@@ -65,7 +63,7 @@ export default function ContactPage() {
       </section>
 
       {/* ───────────── Ways to reach us ───────────── */}
-      <section className="py-28 sm:py-32" aria-labelledby="reach-title">
+      <section className="defer-render py-28 [--defer-h:90rem] sm:py-32 lg:[--defer-h:40rem]" aria-labelledby="reach-title">
         <div className="shell">
           <h2 id="reach-title" className="max-w-xl text-4xl leading-[1.05] font-medium sm:text-5xl" data-reveal="up">
             Four ways to <span className="italic text-wine-700">reach us</span>
@@ -83,7 +81,7 @@ export default function ContactPage() {
               </span>
             </GlowCard>
 
-            <GlowCard glow="22 178 94" className="flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen" data-reveal="up" style={d(90)}>
+            <GlowCard glow="leaf" className="flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen [--d:90ms]" data-reveal="up">
               <span className="grid size-14 place-items-center rounded-2xl bg-leaf-100 text-leaf-700">
                 <Mail className="size-6" />
               </span>
@@ -98,7 +96,7 @@ export default function ContactPage() {
               </div>
             </GlowCard>
 
-            <GlowCard glow="222 99 113" className="flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen" data-reveal="up" style={d(180)}>
+            <GlowCard glow="wine" className="flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen [--d:180ms]" data-reveal="up">
               <span className="grid size-14 place-items-center rounded-2xl bg-wine-100 text-wine-600">
                 <Clock className="size-6" />
               </span>
@@ -121,10 +119,9 @@ export default function ContactPage() {
               href={MAP_URL}
               target="_blank"
               rel="noreferrer noopener"
-              glow="147 120 181"
-              className="group flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen"
+              glow="plum"
+              className="group flex flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen [--d:270ms]"
               data-reveal="up"
-              style={d(270)}
             >
               <span className="grid size-14 place-items-center rounded-2xl bg-plum-100 text-plum-700 transition-transform duration-500 group-hover:-translate-y-1">
                 <MapPin className="size-6" />
@@ -144,7 +141,7 @@ export default function ContactPage() {
       </section>
 
       {/* ───────────── Partners ───────────── */}
-      <section className="pb-28 sm:pb-36" aria-labelledby="partners-title">
+      <section className="defer-render pb-28 [--defer-h:50rem] sm:pb-36 lg:[--defer-h:30rem]" aria-labelledby="partners-title">
         <div className="shell">
           <div className="grid items-center gap-10 rounded-[2.5rem] bg-white p-8 ring-1 ring-linen sm:p-14 lg:grid-cols-[0.8fr_1.2fr]">
             <div data-reveal="up">
@@ -154,10 +151,10 @@ export default function ContactPage() {
               </h2>
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
-              <GlowCard tilt={10} className="grid h-48 place-items-center rounded-[2rem] bg-cream p-8 ring-1 ring-linen" data-reveal="up" style={d(100)}>
+              <GlowCard tilt={10} className="grid h-48 place-items-center rounded-[2rem] bg-cream p-8 ring-1 ring-linen [--d:100ms]" data-reveal="up">
                 <Img src={img.partnerPa} alt="PA Health & Wellness" width={302} height={96} className="h-auto max-h-24 w-auto" />
               </GlowCard>
-              <GlowCard glow="147 120 181" tilt={10} className="grid h-48 place-items-center rounded-[2rem] bg-cream p-8 ring-1 ring-linen" data-reveal="up" style={d(190)}>
+              <GlowCard glow="plum" tilt={10} className="grid h-48 place-items-center rounded-[2rem] bg-cream p-8 ring-1 ring-linen [--d:190ms]" data-reveal="up">
                 <Img src={img.partnerUpmc} alt="UPMC Health Plan" width={122} height={112} className="h-auto max-h-28 w-auto rounded-xl" />
               </GlowCard>
             </div>

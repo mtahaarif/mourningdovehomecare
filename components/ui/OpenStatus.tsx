@@ -63,7 +63,7 @@ export function OpenStatus({ className = "", dark = false }: { className?: strin
       } ${className}`}
     >
       <span className="relative flex size-2">
-        {open && <span className="absolute inset-0 rounded-full bg-leaf-400" style={{ animation: "ping-soft 1.8s ease-out infinite" }} />}
+        {open && <span className="absolute inset-0 animate-[ping-soft_1.8s_ease-out_infinite] rounded-full bg-leaf-400" />}
         <span className={`relative size-2 rounded-full ${open ? "bg-leaf-500" : status ? "bg-wine-400" : "bg-plum-300"}`} />
       </span>
       {label}

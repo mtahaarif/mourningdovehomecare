@@ -1,5 +1,5 @@
 import { Img } from "@/components/ui/Img";
-import type { CSSProperties } from "react";
+import { EagerImg } from "@/components/ui/EagerImg";
 import { ArrowDown, Phone, Quote, Sparkles } from "lucide-react";
 import { PageTransition } from "@/components/site/PageTransition";
 import { FaqSection } from "@/components/sections/FaqSection";
@@ -18,9 +18,7 @@ export const metadata = pageMeta({
   path: "/employment",
 });
 
-const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
-
-const BENEFIT_GLOWS = ["90 180 230", "22 178 94", "222 99 113", "147 120 181"];
+const BENEFIT_GLOWS = ["dove", "leaf", "wine", "plum"] as const;
 const BENEFIT_TONES = ["bg-dove-100 text-dove-700", "bg-leaf-100 text-leaf-700", "bg-wine-100 text-wine-600", "bg-plum-100 text-plum-700"];
 
 export default function EmploymentPage() {
@@ -29,13 +27,13 @@ export default function EmploymentPage() {
       {/* ───────────── Hero ───────────── */}
       <section className="noise relative isolate overflow-hidden bg-plum-950 pt-40 pb-24 text-white sm:pt-48 lg:pb-32">
         <div className="aurora -z-10" aria-hidden="true">
-          <span style={{ "--c": "#3399d6", "--s": "40rem", top: "-16rem", right: "-10rem", "--o": 0.32 } as CSSProperties} />
-          <span style={{ "--c": "#a51f33", "--s": "30rem", bottom: "-14rem", left: "-10rem", "--o": 0.25, "--delay": "-9s" } as CSSProperties} />
+          <span className="top-[-16rem] right-[-10rem] [--c:#3399d6] [--o:0.32] [--s:40rem]" />
+          <span className="bottom-[-14rem] left-[-10rem] [--c:#a51f33] [--delay:-9s] [--o:0.25] [--s:30rem]" />
         </div>
 
         <div className="shell grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <span className="eyebrow enter text-dove-300" style={d(0)}>
+            <span className="eyebrow enter text-dove-300 [--d:0ms]">
               Careers
             </span>
             <h1 className="enter-lcp mt-6 text-6xl leading-[0.95] font-medium sm:text-7xl lg:text-[6rem]">
@@ -45,7 +43,7 @@ export default function EmploymentPage() {
               Are you passionate about providing exceptional care? We are constantly seeking <strong className="font-semibold text-white">compassionate individuals</strong> to join our dedicated
               team of home care professionals. If you are ready to make a difference, we invite you to explore career opportunities with us.
             </p>
-            <div className="enter mt-10 flex flex-wrap gap-3" style={d(270)}>
+            <div className="enter mt-10 flex flex-wrap gap-3 [--d:270ms]">
               <a href="#apply" className="btn btn-light">
                 Apply now <ArrowDown className="btn-arrow size-4" />
               </a>
@@ -55,17 +53,18 @@ export default function EmploymentPage() {
             </div>
           </div>
 
-          <div className="enter relative mx-auto h-[26rem] w-full max-w-md sm:h-[30rem]" style={d(220)}>
+          <div className="enter relative mx-auto h-[26rem] w-full max-w-md [--d:220ms] sm:h-[30rem]">
+            {/* Above the fold on wide screens. The first photo loads eagerly (fetched while the HTML parses); the second stays lazy. */}
             <div className="absolute top-0 right-0 w-[72%] rotate-[4deg] overflow-hidden rounded-[2rem] border-[6px] border-white/90 shadow-lift">
-              <Img src={img.employment1} alt="A caregiver holding a client's hands" width={320} height={240} className="aspect-[4/3] w-full object-cover" />
+              <EagerImg src={img.employment1} alt="A caregiver holding a client's hands" width={320} height={240} loading="eager" className="aspect-[4/3] w-full object-cover" />
             </div>
             <div className="absolute bottom-0 left-0 w-[70%] -rotate-[5deg] overflow-hidden rounded-[2rem] border-[6px] border-white/90 shadow-lift">
               <Img src={img.services3} alt="A caregiver serving a meal to a senior woman" width={320} height={240} className="aspect-[4/3] w-full object-cover" />
             </div>
-            <div className="glass absolute top-1/2 right-2 -translate-y-1/2 rounded-2xl p-4 text-plum-900" style={{ animation: "float 8s ease-in-out infinite" }}>
+            <div className="glass absolute top-1/2 right-2 -translate-y-1/2 animate-[float_8s_ease-in-out_infinite] rounded-2xl p-4 text-plum-900">
               <p className="flex items-center gap-2 text-sm font-bold">
                 <span className="relative flex size-2.5">
-                  <span className="absolute inset-0 rounded-full bg-leaf-400" style={{ animation: "ping-soft 1.8s ease-out infinite" }} />
+                  <span className="absolute inset-0 animate-[ping-soft_1.8s_ease-out_infinite] rounded-full bg-leaf-400" />
                   <span className="relative size-2.5 rounded-full bg-leaf-500" />
                 </span>
                 We&apos;re hiring
@@ -77,8 +76,8 @@ export default function EmploymentPage() {
       </section>
 
       {/* ───────────── Positions marquee ───────────── */}
-      <section aria-label="Open positions" className="border-b border-linen bg-white py-8">
-        <Marquee speed={45} gap="3rem" className="edge-fade-x">
+      <section aria-label="Open positions" className="defer-render border-b border-linen bg-white py-8 [--defer-h:10rem]">
+        <Marquee className="edge-fade-x [--gap:3rem] [--speed:45s]">
           {POSITIONS.map((p) => (
             <span key={p} className="flex items-center gap-12 font-display text-4xl whitespace-nowrap text-plum-900 sm:text-5xl">
               {p}
@@ -89,20 +88,20 @@ export default function EmploymentPage() {
       </section>
 
       {/* ───────────── Why choose us ───────────── */}
-      <section className="py-28 sm:py-36" aria-labelledby="why-title">
+      <section className="defer-render py-28 [--defer-h:90rem] sm:py-36 lg:[--defer-h:50rem]" aria-labelledby="why-title">
         <div className="shell">
           <div className="mx-auto max-w-2xl text-center">
             <span className="eyebrow text-wine-600" data-reveal="up">
               Benefits
             </span>
-            <h2 id="why-title" className="mt-5 text-5xl leading-[1] font-medium sm:text-6xl" data-reveal="up" style={d(80)}>
+            <h2 id="why-title" className="mt-5 text-5xl leading-[1] font-medium [--d:80ms] sm:text-6xl" data-reveal="up">
               Why Choose <span className="italic text-wine-700">Us?</span>
             </h2>
           </div>
 
           <ul className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {CAREER_BENEFITS.map((b, i) => (
-              <li key={b.title} data-reveal="up" style={d(i * 90)}>
+              <li key={b.title} data-reveal="up" className={`[--d:${i * 90}ms]`}>
                 <GlowCard glow={BENEFIT_GLOWS[i]} tilt={8} className="flex h-full flex-col rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen">
                   <span className={`grid size-14 place-items-center rounded-2xl ${BENEFIT_TONES[i]}`}>
                     <Icon name={b.icon} className="size-6" />
@@ -129,16 +128,15 @@ export default function EmploymentPage() {
             <span className="eyebrow text-dove-700" data-reveal="up">
               Apply
             </span>
-            <h2 id="apply-title" className="mt-5 text-4xl leading-[1.05] font-medium sm:text-5xl" data-reveal="up" style={d(80)}>
+            <h2 id="apply-title" className="mt-5 text-4xl leading-[1.05] font-medium [--d:80ms] sm:text-5xl" data-reveal="up">
               Start your journey with us
             </h2>
-            <figure className="relative mt-10 overflow-hidden rounded-[2rem] shadow-lift" data-reveal="scale" style={d(160)}>
+            <figure className="relative mt-10 overflow-hidden rounded-[2rem] shadow-lift [--d:160ms]" data-reveal="scale">
               <Img
                 src={img.employmentFriends}
                 alt="Two women smiling together outdoors"
                 sizes="(max-width: 1024px) 100vw, 500px"
-                className="parallax aspect-[4/3] w-full scale-110 object-cover"
-                style={{ "--px-from": "-24px", "--px-to": "24px" } as CSSProperties}
+                className="parallax aspect-[4/3] w-full scale-110 object-cover [--px-from:-24px] [--px-to:24px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-plum-950/90 via-plum-950/20 to-transparent" />
               <figcaption className="absolute inset-x-0 bottom-0 p-7 text-white">
@@ -151,8 +149,8 @@ export default function EmploymentPage() {
             </figure>
           </div>
 
-          <div className="glass rounded-[2.5rem] p-6 sm:p-10" data-reveal="up" style={d(120)}>
-            <EmploymentForm />
+          <div className="glass rounded-[2.5rem] p-6 [--d:120ms] sm:p-10" data-reveal="up">
+            <EmploymentForm positions={POSITIONS} />
           </div>
         </div>
       </section>

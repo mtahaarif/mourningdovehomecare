@@ -1,4 +1,4 @@
-import type { CSSProperties, ElementType } from "react";
+import { Fragment, type ElementType } from "react";
 
 type WordRevealProps = {
   text: string;
@@ -12,14 +12,15 @@ type WordRevealProps = {
 export function WordReveal({ text, as: Tag = "p", className = "", accent = [] }: WordRevealProps) {
   const words = text.split(" ");
   return (
-    <Tag className={`words ${className}`}>
+    // --n (word count) and each word's --i place its slice of the scroll range (see .words in globals.css).
+    <Tag className={`words [--n:${words.length}] ${className}`}>
       {words.map((word, i) => (
-        <span key={i}>
-          <span className="w" style={{ "--i": i, "--n": words.length } as CSSProperties}>
+        <Fragment key={i}>
+          <span className={`w [--i:${i}]`}>
             {/* The gradient sits on an inner span: its shimmer animation would otherwise replace the reveal animation. */}
             {accent.includes(word.replace(/[^\w']/g, "")) ? <span className="text-gradient">{word}</span> : word}
           </span>{" "}
-        </span>
+        </Fragment>
       ))}
     </Tag>
   );

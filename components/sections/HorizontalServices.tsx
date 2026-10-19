@@ -1,6 +1,5 @@
 import { Img } from "@/components/ui/Img";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import type { CSSProperties } from "react";
 import { TLink } from "@/components/site/TLink";
 import { SERVICE_TRACK } from "@/lib/content";
 
@@ -13,15 +12,7 @@ export function HorizontalServices() {
   return (
     <section
       aria-labelledby="services-track-title"
-      className="hs relative bg-gradient-to-b from-cream via-sand/60 to-cream"
-      style={
-        {
-          "--hs-n": SERVICE_TRACK.length,
-          "--hs-card": "min(82vw, 25rem)",
-          "--hs-gap": "1.5rem",
-          "--hs-pad": "max(1.25rem, calc((100vw - 80rem) / 2 + 2.5rem))",
-        } as CSSProperties
-      }
+      className={`hs relative bg-gradient-to-b from-cream via-sand/60 to-cream [--n:${SERVICE_TRACK.length}]`}
     >
       <div className="hs-pin py-20 lg:py-0">
         <div className="shell mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -31,7 +22,7 @@ export function HorizontalServices() {
               Care that comes <span className="text-gradient italic">to you</span>
             </h2>
           </div>
-          <div className="flex items-center gap-6" data-reveal="up" style={{ "--d": "120ms" } as CSSProperties}>
+          <div className="flex items-center gap-6 [--d:120ms]" data-reveal="up">
             <p className="hidden items-center gap-2 text-sm font-semibold text-plum-600 lg:flex">
               Scroll to explore <ArrowRight className="size-4 animate-pulse" />
             </p>
@@ -49,7 +40,7 @@ export function HorizontalServices() {
 
         <ul className="hs-track">
           {SERVICE_TRACK.map((s, i) => (
-            <li key={s.n} data-reveal="up" style={{ "--d": `${i * 70}ms` } as CSSProperties}>
+            <li key={s.n} data-reveal="up" className={`[--d:${i * 70}ms]`}>
               <TLink
                 href={s.href}
                 className="group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-[2rem] bg-plum-900 p-7 text-white shadow-lift ring-1 ring-black/5"

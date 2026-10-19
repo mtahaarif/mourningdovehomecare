@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Loops set per-item custom properties with classes like [--i:3] or [--d:120ms].
+   Tailwind only generates class names it finds written out in full, so the values
+   those loops can produce are listed here (index, item count, delay in 10ms steps). */
+@source inline("[--i:{0..39}]");
+@source inline("[--n:{1..40}]");
+@source inline("[--d:{0..500..10}ms]");
+
 /* ============================================================
    Design tokens
    Brand colours come from the logo (dove blue, house green) and the
@@ -211,6 +218,17 @@
 
 @utility edge-fade-y {
   mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+/* Below-the-fold sections: the browser skips their style, layout and paint (and the
+   decorative animations inside) until they near the viewport, so the first render and
+   each web-font swap only lay out what is on screen. --defer-h is the height assumed
+   before a section first renders; `auto` remembers the real one after that. Paint
+   containment clips overflow, so this is only for sections that stay inside their box
+   and have no sticky children. */
+@utility defer-render {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto var(--defer-h, 50rem);
 }
 
 /* ============================================================
@@ -526,6 +544,9 @@
   .glow-card:hover::after,
   .glow-card:focus-within::before,
   .glow-card:focus-within::after { opacity: 1; }
+  .glow-leaf { --glow: 22 178 94; }
+  .glow-wine { --glow: 222 99 113; }
+  .glow-plum { --glow: 147 120 181; }
 
   /* Rotating conic border for featured surfaces */
   .spin-border {
@@ -588,7 +609,11 @@
   .stack-card {
     position: sticky;
     top: calc(var(--stack-top, 7rem) + var(--i) * 1.1rem);
+    /* --n cards in the stack; earlier cards recede further, and the last never dims. */
+    --stack-scale: calc(1 - (var(--n) - 1 - var(--i)) * 0.035);
+    --stack-dim: 1;
   }
+  .stack-card:last-child { --stack-dim: 0; }
   .stack-card .stack-shade { opacity: 0; }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
@@ -609,7 +634,12 @@
   /* ---------- Pinned horizontal scroller ----------
      Fallback: a swipeable scroll-snap carousel. Where scroll-driven
      animations are supported on wide screens, the section pins and its
-     track slides sideways as you scroll down. */
+     track slides sideways as you scroll down. --n is the number of cards. */
+  .hs {
+    --hs-card: min(82vw, 25rem);
+    --hs-gap: 1.5rem;
+    --hs-pad: max(1.25rem, calc((100vw - 80rem) / 2 + 2.5rem));
+  }
   .hs-track {
     display: flex;
     gap: var(--hs-gap);
@@ -625,7 +655,7 @@
   @supports (animation-timeline: view()) {
     @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
       .hs {
-        --hs-track-w: calc(var(--hs-n) * var(--hs-card) + (var(--hs-n) - 1) * var(--hs-gap) + 2 * var(--hs-pad));
+        --hs-track-w: calc(var(--n) * var(--hs-card) + (var(--n) - 1) * var(--hs-gap) + 2 * var(--hs-pad));
         --hs-distance: max(0px, var(--hs-track-w) - 100vw);
         height: calc(100svh + var(--hs-distance));
         view-timeline-name: --hs;
@@ -703,8 +733,11 @@
   /* ---------- Fanned photo stack ---------- */
   .fan > * {
     transition: transform 0.9s var(--ease-out-expo), box-shadow 0.9s var(--ease-out-expo);
-    transform: translateX(var(--x)) rotate(var(--r)) translateY(var(--y, 0));
+    transform: translateX(var(--x, 0%)) rotate(var(--r, 0deg)) translateY(var(--y, 0));
   }
+  /* Resting positions live here, not inline, so the hover rules below can override them. */
+  .fan > *:nth-child(1) { --x: -42%; --r: -7deg; }
+  .fan > *:nth-child(3) { --x: 42%; --r: 7deg; }
   .fan:hover > *:nth-child(1) { --x: -58%; --r: -11deg; }
   .fan:hover > *:nth-child(3) { --x: 58%; --r: 11deg; }
   .fan:hover > *:nth-child(2) { --y: -18px; }

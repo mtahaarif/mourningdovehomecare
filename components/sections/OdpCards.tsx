@@ -2,8 +2,8 @@
 
 import { Img } from "@/components/ui/Img";
 import { Plus } from "lucide-react";
-import { useState, type CSSProperties } from "react";
-import { ODP_CARDS } from "@/lib/content";
+import { useState } from "react";
+import { ODP_CARDS } from "@/lib/odp";
 
 /**
  * Hover-reveal cards: the photo fills the card and a panel slides up to reveal
@@ -17,7 +17,7 @@ export function OdpCards() {
       {ODP_CARDS.map((card, i) => {
         const isOpen = open === i;
         return (
-          <li key={card.title} data-reveal="up" style={{ "--d": `${i * 110}ms` } as CSSProperties}>
+          <li key={card.title} data-reveal="up" className={`[--d:${i * 110}ms]`}>
             <article
               className="reveal-card relative h-[32rem] overflow-hidden rounded-[2rem] bg-plum-900 text-white shadow-lift ring-1 ring-white/10"
               data-open={isOpen}

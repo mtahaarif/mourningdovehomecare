@@ -5,7 +5,7 @@ import { faqJsonLd, jsonLdHtml, type Faq } from "@/lib/seo";
 /** Accordion of questions with matching FAQPage structured data. */
 export function FaqSection({ id, title, faqs, className = "pb-28 sm:pb-36" }: { id: string; title: string; faqs: Faq[]; className?: string }) {
   return (
-    <section className={className} aria-labelledby={id}>
+    <section className={`defer-render [--defer-h:50rem] lg:[--defer-h:40rem] ${className}`} aria-labelledby={id}>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(faqJsonLd(faqs))} />
       <div className="shell grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div data-reveal="up">

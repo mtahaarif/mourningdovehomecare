@@ -3,16 +3,16 @@
 import { ArrowRight, LoaderCircle } from "lucide-react";
 import { useActionState, useState } from "react";
 import { submitForm, type FormState } from "@/app/actions";
-import { POSITIONS } from "@/lib/content";
 import { Field } from "./Field";
 import { FormSuccess } from "./FormSuccess";
 
-export function EmploymentForm() {
+// Positions come in as a prop: importing lib/content here would ship all of the site's copy with this form.
+export function EmploymentForm({ positions }: { positions: readonly string[] }) {
   const [key, setKey] = useState(0);
-  return <EmploymentFormInner key={key} onReset={() => setKey((k) => k + 1)} />;
+  return <EmploymentFormInner key={key} positions={positions} onReset={() => setKey((k) => k + 1)} />;
 }
 
-function EmploymentFormInner({ onReset }: { onReset: () => void }) {
+function EmploymentFormInner({ positions, onReset }: { positions: readonly string[]; onReset: () => void }) {
   const [state, action, pending] = useActionState<FormState, FormData>(submitForm.bind(null, "employment"), { ok: false });
 
   if (state.ok) {
@@ -33,7 +33,7 @@ function EmploymentFormInner({ onReset }: { onReset: () => void }) {
       <fieldset className="pt-2">
         <legend className="text-sm font-semibold text-plum-700">Position Applying For</legend>
         <div className="mt-3 flex flex-wrap gap-2">
-          {POSITIONS.map((p) => (
+          {positions.map((p) => (
             <label key={p} className="cursor-pointer">
               <input type="radio" name="position" value={p} className="peer sr-only" />
               <span className="inline-flex items-center rounded-full border border-linen bg-white px-4 py-2 text-sm font-medium text-plum-700 transition peer-checked:border-plum-900 peer-checked:bg-plum-900 peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-dove-200 hover:border-plum-300">

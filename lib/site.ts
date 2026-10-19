@@ -1,13 +1,12 @@
 /**
- * Canonical origin for canonicals, the sitemap, robots.txt and structured data.
- * Set NEXT_PUBLIC_SITE_URL to pin it. Otherwise, on Vercel it follows the
- * project's production domain: the custom domain once one is attached, the
- * *.vercel.app domain until then, so pages never canonicalise to another site.
+ * Canonical origin for canonicals, Open Graph URLs, the sitemap, robots.txt and
+ * structured data. Set NEXT_PUBLIC_SITE_URL to move it (e.g. once a custom domain
+ * is attached). It is deliberately not derived from VERCEL_PROJECT_PRODUCTION_URL:
+ * Vercel resolves that per deployment, and one build picked up the retired
+ * mourningdovehomecare-ten.vercel.app alias, so every page canonicalised to a host
+ * that no longer serves the site and robots.txt pointed at a sitemap that 404s.
  */
-const vercelProduction = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? (vercelProduction ? `https://${vercelProduction}` : "https://www.mourningdovehomecare.com")
-).replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://mourningdovehomecare.vercel.app").replace(/\/$/, "");
 
 /** Vercel preview deployments must not be indexed (they duplicate production). */
 export const IS_PREVIEW = process.env.VERCEL_ENV === "preview";

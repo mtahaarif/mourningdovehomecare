@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Mail, Menu, Phone, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { ViewTransition, useRef, type CSSProperties } from "react";
+import { ViewTransition, useRef } from "react";
 import { TLink } from "./TLink";
 import { Logo } from "@/components/ui/Logo";
 import { OpenStatus } from "@/components/ui/OpenStatus";
@@ -27,14 +27,14 @@ export function Header() {
   const close = () => sheet.current?.close();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50" style={{ viewTransitionName: "site-header" }}>
+    <header className="fixed inset-x-0 top-0 z-50 [view-transition-name:site-header]">
       {/* reading progress */}
       <div className="scroll-progress absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-dove-400 via-leaf-400 to-wine-400" />
 
       <div className="shell pt-3 sm:pt-4">
         <div className="header-bar flex items-center justify-between gap-4 rounded-full border border-white/50 bg-white/45 py-2 pr-2 pl-4 backdrop-blur-xl backdrop-saturate-150 sm:pl-5">
           <TLink href="/" className="shrink-0 rounded-full" aria-label="Mourning Dove Home Care — home">
-            <Logo />
+            <Logo eager />
           </TLink>
 
           {/* Desktop navigation with a morphing active pill */}
@@ -103,12 +103,12 @@ export function Header() {
         onClick={(e) => e.target === e.currentTarget && close()}
       >
         <div className="aurora" aria-hidden="true">
-          <span style={{ "--c": "#3399d6", "--s": "26rem", top: "-6rem", right: "-8rem", "--o": 0.35 } as CSSProperties} />
-          <span style={{ "--c": "#16b25e", "--s": "22rem", bottom: "-6rem", left: "-8rem", "--o": 0.25, "--delay": "-6s" } as CSSProperties} />
+          <span className="top-[-6rem] right-[-8rem] [--c:#3399d6] [--o:0.35] [--s:26rem]" />
+          <span className="bottom-[-6rem] left-[-8rem] [--c:#16b25e] [--delay:-6s] [--o:0.25] [--s:22rem]" />
         </div>
         <div className="relative flex min-h-full flex-col px-6 pt-6 pb-10">
           <div className="flex items-center justify-between">
-            <span className="sheet-item" style={{ "--i": 0 } as CSSProperties}>
+            <span className="sheet-item [--i:0]">
               <Logo light />
             </span>
             <button type="button" onClick={close} aria-label="Close menu" className="grid size-11 place-items-center rounded-full bg-white/10 ring-1 ring-white/15">
@@ -121,7 +121,7 @@ export function Header() {
               {NAV.map((item, i) => {
                 const active = pathname === item.href;
                 return (
-                  <li key={item.href} className="sheet-item" style={{ "--i": i + 1 } as CSSProperties}>
+                  <li key={item.href} className={`sheet-item [--i:${i + 1}]`}>
                     <TLink
                       href={item.href}
                       onClick={close}
@@ -139,7 +139,7 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="sheet-item mt-auto space-y-4 pt-10" style={{ "--i": NAV.length + 1 } as CSSProperties}>
+          <div className={`sheet-item mt-auto space-y-4 pt-10 [--i:${NAV.length + 1}]`}>
             <OpenStatus dark />
             <a href={PHONE_HREF} className="btn btn-light w-full">
               <span className="btn-icon">
