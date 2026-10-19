@@ -12,7 +12,7 @@ const FOOTER_LINKS = [
   { href: "/", label: "Home care in Montgomery County" },
   { href: "/about", label: "About Mourning Dove" },
   { href: "/services", label: "Home care & ODP services" },
-  { href: "/general-4", label: "Client testimonials" },
+  { href: "/testimonials", label: "Client testimonials" },
   { href: "/employment", label: "Careers: join our team" },
   { href: "/contact-us", label: "Contact our office" },
 ];

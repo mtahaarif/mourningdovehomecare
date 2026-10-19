@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, Quote, X } from "lucide-react";
-import { useRef, useState, type CSSProperties } from "react";
+import { useRef, useState } from "react";
 import { Marquee } from "@/components/ui/Marquee";
 import { TESTIMONIALS, type Testimonial } from "@/lib/content";
 
@@ -63,13 +63,15 @@ export function TestimonialWall() {
         ))}
       </div>
 
-      {/* Mobile / tablet: simple grid */}
-      <div className="grid gap-5 sm:grid-cols-2 lg:hidden">
-        {TESTIMONIALS.map((t, i) => (
-          <div key={t.name} data-reveal="up" style={{ "--d": `${(i % 2) * 90}ms` } as CSSProperties}>
-            <Card t={t} index={i} onOpen={() => open(t)} />
-          </div>
-        ))}
+      {/* Mobile / tablet: infinite horizontal carousel */}
+      <div className="-mx-5 lg:hidden sm:-mx-10">
+        <Marquee speed={90} gap="1rem" className="edge-fade-x">
+          {TESTIMONIALS.map((t, i) => (
+            <div key={t.name} className="flex w-[17.5rem] shrink-0 sm:w-[22rem] [&>article]:flex [&>article]:w-full [&>article]:flex-col [&>article]:justify-between">
+              <Card t={t} index={i} onOpen={() => open(t)} />
+            </div>
+          ))}
+        </Marquee>
       </div>
 
       <dialog

@@ -10,7 +10,7 @@ import { img } from "@/lib/images";
 export const metadata = pageMeta({
   title: "Client Testimonials | Mourning Dove Home Care",
   description: "Read Google reviews from families and clients of Mourning Dove Home Care, a home care provider serving Montgomery County, PA, and the surrounding areas.",
-  path: "/general-4",
+  path: "/testimonials",
 });
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;

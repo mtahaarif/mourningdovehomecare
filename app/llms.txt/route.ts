@@ -21,7 +21,7 @@ export function GET() {
 - [Home](${SITE_URL}/): Overview of Mourning Dove Home Care, its mission and services.
 - [About](${SITE_URL}/about): Who we are, our commitment to clients, and the areas we serve.
 - [Services](${SITE_URL}/services): Non-skilled home care, specialized care, Supported Employment Services (partnered with UPMC Health Plan) and ODP services.
-- [Testimonials](${SITE_URL}/general-4): Google reviews from families and clients.
+- [Testimonials](${SITE_URL}/testimonials): Google reviews from families and clients.
 - [Join Our Team](${SITE_URL}/employment): Open positions, benefits and the online job application.
 - [Contact Us](${SITE_URL}/contact-us): Phone, email, office address, hours and contact form.
 

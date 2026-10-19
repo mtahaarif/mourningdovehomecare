@@ -166,9 +166,9 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-12">
+          <div className="grid grid-cols-12 gap-3 sm:gap-5">
             <figure
-              className="group relative min-h-[26rem] overflow-hidden rounded-[2rem] bg-plum-900 lg:col-span-7 lg:row-span-2 lg:min-h-0"
+              className="group relative col-span-7 row-span-2 overflow-hidden rounded-[1.25rem] bg-plum-900 sm:rounded-[2rem]"
               data-reveal="scale"
             >
               <Img
@@ -178,20 +178,20 @@ export default function HomePage() {
                 className="clip-scrub absolute inset-0 size-full object-cover transition-transform duration-[1.6s] group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-plum-950/90 via-plum-950/30 to-transparent" />
-              <figcaption className="absolute inset-x-0 bottom-0 p-8 sm:p-10">
-                <Quote className="size-9 text-dove-300" />
-                <p className="mt-4 max-w-xl font-display text-2xl leading-snug text-white sm:text-[2rem]">
+              <figcaption className="absolute inset-x-0 bottom-0 p-4 sm:p-10">
+                <Quote className="size-5 text-dove-300 sm:size-9" />
+                <p className="mt-2 max-w-xl font-display text-[0.8rem] leading-snug text-white sm:mt-4 sm:text-[2rem]">
                   We are dedicated to ensuring that our patients receive the highest standard of care in a familiar and supportive environment.
                 </p>
               </figcaption>
             </figure>
 
-            <GlowCard className="rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen sm:p-10 lg:col-span-5" data-reveal="up" style={d(100)}>
-              <span className="grid size-14 place-items-center rounded-2xl bg-dove-100 text-dove-700">
-                <House className="size-6" />
+            <GlowCard className="col-span-5 rounded-[1.25rem] bg-white p-4 shadow-soft ring-1 ring-linen sm:rounded-[2rem] sm:p-10" data-reveal="up" style={d(100)}>
+              <span className="grid size-9 place-items-center rounded-xl sm:size-14 sm:rounded-2xl bg-dove-100 text-dove-700">
+                <House className="size-4 sm:size-6" />
               </span>
-              <h3 className="mt-6 text-2xl font-medium sm:text-[1.75rem]">Tailored to your unique needs</h3>
-              <p className="mt-3 leading-relaxed text-plum-700">
+              <h3 className="mt-3 text-[0.95rem] leading-tight font-medium sm:mt-6 sm:text-[1.75rem]">Tailored to your unique needs</h3>
+              <p className="mt-2 text-[0.7rem] leading-snug text-plum-700 sm:mt-3 sm:text-base sm:leading-relaxed">
                 Mourning Dove Home Care is committed to meeting your unique needs, and we take pride in offering personalized services tailored
                 to each individual.
               </p>
@@ -199,20 +199,20 @@ export default function HomePage() {
 
             <GlowCard
               glow="22 178 94"
-              className="rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-linen sm:p-10 lg:col-span-5"
+              className="col-span-5 rounded-[1.25rem] bg-white p-4 shadow-soft ring-1 ring-linen sm:rounded-[2rem] sm:p-10"
               data-reveal="up"
               style={d(180)}
             >
-              <span className="grid size-14 place-items-center rounded-2xl bg-leaf-100 text-leaf-700">
-                <Star className="size-6" />
+              <span className="grid size-9 place-items-center rounded-xl sm:size-14 sm:rounded-2xl bg-leaf-100 text-leaf-700">
+                <Star className="size-4 sm:size-6" />
               </span>
-              <h3 className="mt-6 text-2xl font-medium sm:text-[1.75rem]">A focus on excellence</h3>
-              <p className="mt-3 leading-relaxed text-plum-700">
+              <h3 className="mt-3 text-[0.95rem] leading-tight font-medium sm:mt-6 sm:text-[1.75rem]">A focus on excellence</h3>
+              <p className="mt-2 text-[0.7rem] leading-snug text-plum-700 sm:mt-3 sm:text-base sm:leading-relaxed">
                 With a focus on excellence, we strive to make a meaningful difference in the lives of those we serve.
               </p>
             </GlowCard>
 
-            <div className="spin-border rounded-[2rem] lg:col-span-12" data-reveal="up">
+            <div className="spin-border col-span-12 rounded-[1.25rem] sm:rounded-[2rem]" data-reveal="up">
               <div className="noise relative grid gap-8 overflow-hidden rounded-[2rem] bg-plum-950 p-8 text-white sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
                 <div>
                   <span className="eyebrow text-wine-300">Specialized care</span>
@@ -248,7 +248,7 @@ export default function HomePage() {
               Kind words from <span className="italic">families</span>
             </h2>
           </div>
-          <TLink href="/general-4" className="btn btn-ghost !h-11 text-sm" data-reveal="up">
+          <TLink href="/testimonials" className="btn btn-ghost !h-11 text-sm" data-reveal="up">
             Read all reviews <ArrowUpRight className="btn-arrow size-4" />
           </TLink>
         </div>

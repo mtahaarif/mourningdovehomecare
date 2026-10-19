@@ -50,7 +50,7 @@ export const NAV = [
   { label: "Home", href: "/", sr: ["", " page"] },
   { label: "About", href: "/about", sr: ["", " Mourning Dove"] },
   { label: "Services", href: "/services", sr: ["Home care ", ""] },
-  { label: "Testimonials", href: "/general-4", sr: ["Client ", ""] },
+  { label: "Testimonials", href: "/testimonials", sr: ["Client ", ""] },
   { label: "Join Our Team", href: "/employment", sr: ["", ""] },
   { label: "Contact Us", href: "/contact-us", sr: ["", ""] },
 ] as const;
