@@ -126,10 +126,13 @@ Route (app)
 
 ## 3. Environment variables
 
-The project needs **no** environment variables to run locally. All of the variables below are optional.
+The site runs locally without any environment variables, but the forms only send email when `RESEND_API_KEY` is set. Put it in `.env.local` locally, and in the Vercel project settings for deployments.
 
 | Variable | Read in | Effect |
 | --- | --- | --- |
+| `RESEND_API_KEY` | [app/actions.ts](app/actions.ts) | **Required for the forms.** Resend API key used to email submissions. Without it, every submission fails and the visitor is asked to call instead. |
+| `FORM_TO_EMAIL` | [app/actions.ts](app/actions.ts) | Inbox that receives submissions. Defaults to `EMAIL` in [lib/site.ts](lib/site.ts) (`care@mourningdovehomecare.net`). |
+| `FORM_FROM_EMAIL` | [app/actions.ts](app/actions.ts) | Sender address. Defaults to `Mourning Dove Website <forms@mourningdovehomecare.com>`. It must be on a domain verified in Resend; `mourningdovehomecare.com` is verified. |
 | `NEXT_PUBLIC_SITE_URL` | [lib/site.ts](lib/site.ts) | Canonical origin used for canonical URLs, Open Graph URLs, the sitemap, `robots.txt`, `llms.txt` and JSON-LD. A trailing slash is stripped. Defaults to `https://mourningdovehomecare.vercel.app`. **Set this when a custom domain is attached.** |
 | `GOOGLE_SITE_VERIFICATION` | [app/layout.tsx](app/layout.tsx) | When set, outputs `<meta name="google-site-verification">` so Google Search Console can verify a `*.vercel.app` property, where there is no DNS record to edit. Pages are static, so it must be present **at build time**. |
 | `VERCEL_ENV` | [lib/site.ts](lib/site.ts), [next.config.ts](next.config.ts) | Set by Vercel. When it is `preview`, every page is marked `noindex, nofollow`, `robots.txt` disallows all crawlers, and the CSP allows the Vercel preview toolbar. |
@@ -588,9 +591,17 @@ On success: *"Thanks for submitting! We've received your application and will re
 1. Converts every field to a trimmed string.
 2. Checks `email` against `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` and otherwise returns *"Please enter a valid email address."*
 3. For `employment`, requires `phone` and otherwise returns *"Please enter a phone number."*
-4. Logs the submission with `console.info("[contact form submission]", fields)` and returns `{ ok: true }`.
+4. Emails the submission through the **Resend REST API** (`POST https://api.resend.com/emails`, called with `fetch`, so no SDK is needed), then returns `{ ok: true }`.
 
-> ⚠️ **Submissions are not delivered anywhere yet.** They only appear in the server logs (Vercel function logs). The original site stored them in Wix Forms. Before launch, connect `submitForm` to email or a CRM, for example Resend, SendGrid or a database insert. See [§23](#23-known-limitations-and-pre-launch-checklist).
+**Email delivery:**
+
+- **From** `forms@mourningdovehomecare.com` (`FORM_FROM_EMAIL`), **to** `care@mourningdovehomecare.net` (`FORM_TO_EMAIL`).
+- **Reply-To** is the visitor's email address, so the office can reply straight from its inbox.
+- **Subject:** `Website contact: {subject}` for the contact form, or `Job application: {position} — {name}` for applications.
+- **Body:** a plain-text version and an HTML table of each form's known fields, in form order. Empty fields show "—". Values are HTML-escaped, and only the listed fields are included (`FIELDS` in `actions.ts`).
+- **On failure** (missing key, Resend error or network error) the visitor sees *"Sorry, we couldn't send that. Please try again, or call us at (855) 540-2645."*, and the full submission is written to the server log with `console.error`, so it can still be recovered from the Vercel function logs.
+
+To add a field to a form, add the input to the form component **and** add its `[name, label]` to `FIELDS` in [app/actions.ts](app/actions.ts). Otherwise it won't appear in the email.
 
 The CSP's `form-action 'self'` only allows forms to post to this site's own origin.
 
@@ -1046,7 +1057,7 @@ The site works in all modern browsers. Newer platform features add polish where 
 
 ## 23. Known limitations and pre-launch checklist
 
-- [ ] **Connect form submissions to a delivery channel.** `submitForm` in [app/actions.ts](app/actions.ts) only logs submissions to the server console. Connect it to email (e.g. Resend or SendGrid), a CRM or a database, and update the CSP if the integration runs in the browser.
+- [ ] **Add `RESEND_API_KEY` to the Vercel project** (Production and Preview) and redeploy. Without it, the live forms can't send ([§9.3](#93-how-submission-works)).
 - [ ] **Add spam protection** to both forms (e.g. a honeypot field, rate limiting or a CAPTCHA). There is none yet.
 - [ ] **Have the business owner review** the `blurb` copy on the seven non-skilled service cards in [lib/content.ts](lib/content.ts).
 - [ ] **Consider validating more fields on the server** (e.g. phone format, date sanity). Only email, and phone for applications, are checked.
