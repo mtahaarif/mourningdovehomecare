@@ -6,7 +6,7 @@
  * mourningdovehomecare-ten.vercel.app alias, so every page canonicalised to a host
  * that no longer serves the site and robots.txt pointed at a sitemap that 404s.
  */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://mourningdovehomecare.vercel.app").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://mourningdovehomecare.com").replace(/\/$/, "");
 
 /** Vercel preview deployments must not be indexed (they duplicate production). */
 export const IS_PREVIEW = process.env.VERCEL_ENV === "preview";
